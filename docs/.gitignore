@@ -1,2 +1,2 @@
-*
-!.gitignore
+.sass-cache
+.jekyll-metadata
