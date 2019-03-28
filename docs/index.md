@@ -8,7 +8,7 @@ HalfLajf is a modern single-page application (SPA) website which lets users from
 **Project key features are:**
 * SPA design
 * Google Firebase implementation
-* Both tradidional and social-media based user authentication
+* Both traditional and social-media based user authentication
 * Ability to upload user-generated content
 * Comment and upvote/downvote system
 * Bootstrap based UI for optimal user experience on both mobile and traditional devices
