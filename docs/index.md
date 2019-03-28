@@ -3,7 +3,7 @@ layout: default
 ---
 ## About the project
 
-Half Lajf is a modern single-page application (SPA) website which lets users from all around the globe share their funny pictures and memes. Half Lajf offers fluid yet intuitive user experience for all of your humour-related content.
+HalfLajf is a modern single-page application (SPA) website which lets users from all around the globe share their funny pictures and memes. HalfLajf offers fluid yet intuitive user experience for all of your humour-related content.
 
 **Project key features are:**
 * SPA design
