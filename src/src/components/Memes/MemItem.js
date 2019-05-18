@@ -40,7 +40,7 @@ class MemItem extends Component {
           />
         ) : (
           <span>
-            <strong>{mem.userId}</strong> {mem.url}
+            <strong>{mem.userId}</strong> <img src={mem.url} />
             {mem.editedAt && <span>(Edited)</span>}
           </span>
         )}

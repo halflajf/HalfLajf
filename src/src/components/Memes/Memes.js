@@ -11,6 +11,7 @@ class MemesBase extends Component {
     this.state = {
       loading: false,
       memes: [],
+      comments: [],
       url: "",
       limit: 5
     };

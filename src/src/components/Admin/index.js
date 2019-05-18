@@ -6,7 +6,7 @@ import { withAuthorization, withEmailVerification } from "../Session";
 import { UserList, UserItem } from "../Users";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
-import Memes from "../Messages";
+import Memes from "../Memes";
 
 const AdminPage = () => (
   <div>
