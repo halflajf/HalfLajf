@@ -13,6 +13,7 @@ class MemesBase extends Component {
       memes: [],
       comments: [1, 2, 3, "essa"],
       url: "",
+      title: "",
       limit: 5
     };
   }
@@ -70,15 +71,19 @@ class MemesBase extends Component {
     this.setState({ url: event.target.value });
   };
 
+  onChangeTitle = event => {
+    this.setState({ title: event.target.value });
+  };
   onCreateMem = (event, authUser) => {
     this.props.firebase.memes().push({
       url: this.state.url,
       userId: authUser.uid,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
-      comment: ["0"]
+      comment: ["0"],
+      title: this.state.title
     });
 
-    this.setState({ url: "" });
+    this.setState({ url: "", title: "" });
 
     event.preventDefault();
   };
@@ -98,7 +103,7 @@ class MemesBase extends Component {
   };
 
   render() {
-    const { url, memes, loading } = this.state;
+    const { url, memes, loading, title } = this.state;
 
     return (
       <AuthUserContext.Consumer>
@@ -123,7 +128,10 @@ class MemesBase extends Component {
             )}
 
             <form onSubmit={event => this.onCreateMem(event, authUser)}>
+              img src
               <input type="text" value={url} onChange={this.onChangeText} />
+              title
+              <input type="text" value={title} onChange={this.onChangeTitle} />
               <button type="submit">Send</button>
             </form>
           </div>
