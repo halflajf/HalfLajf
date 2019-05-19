@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
+import { AuthUserContext } from "../Session";
 
 const Landing = () => (
   <div>
@@ -60,47 +61,48 @@ class DisplayMemesBase extends Component {
     const { memes, loading } = this.state;
 
     return (
-      <div>
-        {loading && <div>Loading ...</div>}
-        {memes ? (
-          <MessageList messages={memes} onAddComment={this.onAddComment} />
-        ) : (
-          <div>There are no memes ...</div>
+      <AuthUserContext.Consumer>
+        {authUser => (
+          <div>
+            {loading && <div>Loading ...</div>}
+            {memes ? (
+              <MessageList
+                messages={memes}
+                onAddComment={this.onAddComment}
+                authUser={authUser}
+              />
+            ) : (
+              <div>There are no memes ...</div>
+            )}
+          </div>
         )}
-      </div>
+      </AuthUserContext.Consumer>
     );
   }
 }
 
-const MessageList = ({ messages, onAddComment }) => (
+const MessageList = ({ messages, onAddComment, authUser = { authUser } }) => (
   <ul>
     {messages.map(message => (
       <MemItem
         key={message.uid}
         message={message}
         onAddComment={onAddComment}
+        authUser={authUser}
       />
     ))}
   </ul>
 );
-
-/*
-const MessageItem = ({ message }) => (
-  <li>
-    <strong>User id: {message.userId} </strong>
-    <strong> title {message.title}</strong>
-    <br />
-    <img src={message.url} />
-  </li>
-);
-*/
 
 class MemItem extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      comment: ""
+      comment: "",
+      authUser: {
+        uid: this.props.authUser
+      }
     };
   }
 
@@ -115,9 +117,8 @@ class MemItem extends Component {
   };
 
   render() {
+    const { comment, authUser } = this.state;
     const { message } = this.props;
-    const { comment } = this.state;
-
     return (
       <li>
         <span>
@@ -126,8 +127,17 @@ class MemItem extends Component {
           <br />
           <img src={message.url} />
           <CommentList memes={message} />
-          <input type="text" value={comment} onChange={this.onChangeComment} />
-          <button onClick={this.onSaveEditText}>Add comment</button>
+
+          {authUser.uid && (
+            <span>
+              <input
+                type="text"
+                value={comment}
+                onChange={this.onChangeComment}
+              />
+              <button onClick={this.onSaveEditText}>Add comment</button>
+            </span>
+          )}
         </span>
       </li>
     );

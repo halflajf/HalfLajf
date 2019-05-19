@@ -111,6 +111,7 @@ class Messages extends Component {
                 }))}
                 onEditMessage={this.onEditMessage}
                 onRemoveMessage={this.onRemoveMessage}
+                authUser={authUser}
               />
             )}
 
