@@ -121,6 +121,7 @@ class MemItem extends Component {
     const { message } = this.props;
     return (
       <li>
+        {console.log(authUser)}
         <span>
           <strong>User id: {message.userId} </strong>
           <strong> title {message.title}</strong>
