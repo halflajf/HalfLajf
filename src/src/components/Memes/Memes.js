@@ -11,7 +11,7 @@ class MemesBase extends Component {
     this.state = {
       loading: false,
       memes: [],
-      comments: [],
+      comments: [1, 2, 3, "essa"],
       url: "",
       limit: 5
     };
@@ -22,6 +22,20 @@ class MemesBase extends Component {
   }
   onNextPage = () => {
     this.setState(state => ({ limit: state.limit + 5 }), this.onListenForMemes);
+  };
+
+  onAddComment = (mem, comm) => {
+    const { uid, ...memSnapshot } = mem;
+    let { comment } = mem;
+
+    if (comment[0] == "0") {
+      comment.splice(0, 1, comm);
+    }
+    comment.push(comm);
+    this.props.firebase.mem(mem.uid).set({
+      ...memSnapshot,
+      comment
+    });
   };
   onListenForMemes() {
     this.setState({ loading: true });
@@ -60,7 +74,8 @@ class MemesBase extends Component {
     this.props.firebase.memes().push({
       url: this.state.url,
       userId: authUser.uid,
-      createdAt: this.props.firebase.serverValue.TIMESTAMP
+      createdAt: this.props.firebase.serverValue.TIMESTAMP,
+      comment: ["0"]
     });
 
     this.setState({ url: "" });
@@ -101,6 +116,7 @@ class MemesBase extends Component {
                 memes={memes}
                 onRemoveMem={this.onRemoveMem}
                 onEditMem={this.onEditMem}
+                onAddComment={this.onAddComment}
               />
             ) : (
               <div>There are no memes ...</div>

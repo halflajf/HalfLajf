@@ -2,7 +2,7 @@ import React from "react";
 
 import MemItem from "./MemItem";
 
-const MemList = ({ memes, onRemoveMem, onEditMem, authUser }) => (
+const MemList = ({ memes, onRemoveMem, onEditMem, authUser, onAddComment }) => (
   <ul>
     {memes.map(mem => (
       <MemItem
@@ -11,6 +11,7 @@ const MemList = ({ memes, onRemoveMem, onEditMem, authUser }) => (
         onRemoveMem={onRemoveMem}
         onEditMem={onEditMem}
         authUser={authUser}
+        onAddComment={onAddComment}
       />
     ))}
   </ul>

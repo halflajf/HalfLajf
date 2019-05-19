@@ -6,7 +6,8 @@ class MemItem extends Component {
 
     this.state = {
       editMode: false,
-      editText: this.props.mem.url
+      editText: this.props.mem.url,
+      comment: ""
     };
   }
   onToggleEditMode = () => {
@@ -26,9 +27,19 @@ class MemItem extends Component {
     this.setState({ editMode: false });
   };
 
+  onSaveEditComment = () => {
+    this.props.onAddComment(this.props.mem, this.state.comment);
+
+    this.setState({ editMode: false, comment: "" });
+  };
+
+  onChangeComment = event => {
+    this.setState({ comment: event.target.value });
+  };
+
   render() {
     const { authUser, mem, onRemoveMem } = this.props;
-    const { editMode, editText } = this.state;
+    const { editMode, editText, comment } = this.state;
 
     return (
       <li>
@@ -61,9 +72,25 @@ class MemItem extends Component {
             )}
           </span>
         )}
+        <CommentList memes={mem} />
+        <input type="text" value={comment} onChange={this.onChangeComment} />
+        <button onClick={this.onSaveEditComment}>Add comment</button>
       </li>
     );
   }
 }
 
+const CommentList = ({ memes }) => (
+  <ul>
+    {memes.comment.map((mem, i) => (
+      <CommentItem key={i} mem={mem} />
+    ))}
+  </ul>
+);
+
+const CommentItem = ({ mem }) => (
+  <li>
+    <strong>{mem.userId}</strong> {mem}
+  </li>
+);
 export default MemItem;
