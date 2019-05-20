@@ -28,7 +28,11 @@ class MemItem extends Component {
   };
 
   onSaveEditComment = () => {
-    this.props.onAddComment(this.props.mem, this.state.comment);
+    this.props.onAddComment(
+      this.props.mem,
+      this.state.comment,
+      this.props.authUser
+    );
 
     this.setState({ editMode: false, comment: "" });
   };
@@ -40,7 +44,7 @@ class MemItem extends Component {
   render() {
     const { authUser, mem, onRemoveMem } = this.props;
     const { editMode, editText, comment } = this.state;
-
+    const dupa = mem.comments;
     return (
       <li>
         {editMode ? (
@@ -70,7 +74,7 @@ class MemItem extends Component {
                 Delete
               </button>
             )}
-            <CommentList memes={mem} />
+            <CommentList memes={dupa} />
             <input
               type="text"
               value={comment}
@@ -86,7 +90,8 @@ class MemItem extends Component {
 
 const CommentList = ({ memes }) => (
   <ul>
-    {memes.comment.map((mem, i) => (
+    {console.log(memes)}
+    {memes.map((mem, i) => (
       <CommentItem key={i} mem={mem} />
     ))}
   </ul>
@@ -94,7 +99,8 @@ const CommentList = ({ memes }) => (
 
 const CommentItem = ({ mem }) => (
   <li>
-    <strong>{mem.userId}</strong> {mem}
+    {console.log(mem)}
+    <strong>{mem.userId}</strong> {mem.comment}
   </li>
 );
 export default MemItem;

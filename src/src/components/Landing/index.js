@@ -39,17 +39,24 @@ class DisplayMemesBase extends Component {
     });
   }
 
-  onAddComment = (mem, comm) => {
+  onAddComment = (mem, message, authUser) => {
     const { uid, ...memSnapshot } = mem;
-    let { comment } = mem;
+    let { comments } = mem;
 
-    if (comment[0] == "0") {
-      comment.splice(0, 1, comm);
+    let comment = {
+      userId: authUser.uid,
+      createdAt: this.props.firebase.serverValue.TIMESTAMP,
+      comment: message
+    };
+
+    if (comments[0].comment == "Brak komentarzy") {
+      comments.splice(0, 1);
     }
-    comment.push(comm);
+    comments.push(comment);
+
     this.props.firebase.mem(mem.uid).set({
       ...memSnapshot,
-      comment
+      comments
     });
   };
 
@@ -81,7 +88,7 @@ class DisplayMemesBase extends Component {
   }
 }
 
-const MessageList = ({ messages, onAddComment, authUser = { authUser } }) => (
+const MessageList = ({ messages, onAddComment, authUser }) => (
   <ul>
     {messages.map(message => (
       <MemItem
@@ -107,7 +114,11 @@ class MemItem extends Component {
   }
 
   onSaveEditText = () => {
-    this.props.onAddComment(this.props.message, this.state.comment);
+    this.props.onAddComment(
+      this.props.message,
+      this.state.comment,
+      this.props.authUser
+    );
 
     this.setState({ comment: "" });
   };
@@ -119,16 +130,15 @@ class MemItem extends Component {
   render() {
     const { comment, authUser } = this.state;
     const { message } = this.props;
+
     return (
       <li>
-        {console.log(authUser)}
         <span>
           <strong>User id: {message.userId} </strong>
           <strong> title {message.title}</strong>
           <br />
           <img src={message.url} />
-          <CommentList memes={message} />
-
+          <CommentList memes={message.comments} />
           {authUser.uid && (
             <span>
               <input
@@ -147,7 +157,7 @@ class MemItem extends Component {
 
 const CommentList = ({ memes }) => (
   <ul>
-    {memes.comment.map((mem, i) => (
+    {memes.map((mem, i) => (
       <CommentItem key={i} mem={mem} />
     ))}
   </ul>
@@ -155,7 +165,7 @@ const CommentList = ({ memes }) => (
 
 const CommentItem = ({ mem }) => (
   <li>
-    <strong>{mem.userId}</strong> {mem}
+    <strong>{mem.userId}</strong> {mem.comment}
   </li>
 );
 

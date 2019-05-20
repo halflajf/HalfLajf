@@ -11,7 +11,6 @@ class MemesBase extends Component {
     this.state = {
       loading: false,
       memes: [],
-      comments: [1, 2, 3, "essa"],
       url: "",
       title: "",
       limit: 5
@@ -25,17 +24,24 @@ class MemesBase extends Component {
     this.setState(state => ({ limit: state.limit + 5 }), this.onListenForMemes);
   };
 
-  onAddComment = (mem, comm) => {
+  onAddComment = (mem, message, authUser) => {
     const { uid, ...memSnapshot } = mem;
-    let { comment } = mem;
+    let { comments } = mem;
 
-    if (comment[0] == "0") {
-      comment.splice(0, 1, comm);
+    let comment = {
+      userId: authUser.uid,
+      createdAt: this.props.firebase.serverValue.TIMESTAMP,
+      comment: message
+    };
+
+    if (comments[0].comment == "Brak komentarzy") {
+      comments.splice(0, 1);
     }
-    comment.push(comm);
+    comments.push(comment);
+
     this.props.firebase.mem(mem.uid).set({
       ...memSnapshot,
-      comment
+      comments
     });
   };
   onListenForMemes() {
@@ -79,7 +85,11 @@ class MemesBase extends Component {
       url: this.state.url,
       userId: authUser.uid,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
-      comment: ["0"],
+      comments: [
+        {
+          comment: "Brak komentarzy"
+        }
+      ],
       title: this.state.title
     });
 
