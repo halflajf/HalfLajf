@@ -6,71 +6,76 @@ class CommentItem extends Component {
     super(props);
 
     this.state = {
-      editMode: false,
-      editText: this.props.mem.comment
+      CommentEditMode: false,
+      editComment: this.props.comment.comment
     };
   }
-  onRemoveComment = (uid, id) => {
-    this.props.firebase.comment(uid, id).remove();
+  onRemoveComment = (MemUid, index) => {
+    this.props.firebase.comment(MemUid, index).remove();
   };
 
-  onToggleEditMode = () => {
+  onToggleCommentEditMode = () => {
     this.setState(state => ({
-      editMode: !state.editMode,
-      editText: this.props.mem.comment
+      CommentEditMode: !state.CommentEditMode,
+      editComment: this.props.comment.comment
     }));
   };
 
-  onEditMessage = (uid, mem, message, pentla) => {
-    const { comment, ...commentSnapshot } = mem;
+  onEditMessage = (MemUid, commentObj, message, index) => {
+    const { comment, ...commentSnapshot } = commentObj;
 
-    this.props.firebase.comment(uid, pentla).set({
+    this.props.firebase.comment(MemUid, index).set({
       comment: message,
       ...commentSnapshot,
       editedAt: this.props.firebase.serverValue.TIMESTAMP
     });
 
-    this.setState({ editMode: false });
+    this.setState({ CommentEditMode: false });
   };
 
-  onChangeEditText = event => {
-    this.setState({ editText: event.target.value });
+  onChangeeditComment = event => {
+    this.setState({ editComment: event.target.value });
   };
 
   render() {
-    const { editMode, editText } = this.state;
-    const { mem, pentla, uid, authUser } = this.props;
+    const { CommentEditMode, editComment } = this.state;
+    const { comment, index, MemUid } = this.props;
 
     return (
       <span>
         <li>
-          {editMode ? (
+          {CommentEditMode ? (
             <input
               type="text"
-              value={editText}
-              onChange={this.onChangeEditText}
+              value={editComment}
+              onChange={this.onChangeeditComment}
             />
           ) : (
             <span>
-              {mem.comment} {mem.editedAt && <span>(Edited)</span>}
+              {comment.comment}
+              {comment.editedAt && (
+                <span> (Edited) DateToCount {comment.editedAt}</span>
+              )}
             </span>
           )}
 
-          {editMode ? (
+          {CommentEditMode ? (
             <span>
               <button
-                onClick={() => this.onEditMessage(uid, mem, editText, pentla)}
+                onClick={() =>
+                  this.onEditMessage(MemUid, comment, editComment, index)
+                }
               >
                 Save
               </button>
-              <button onClick={this.onToggleEditMode}>Cofnij</button>
+              <button onClick={this.onToggleCommentEditMode}>Cofnij</button>
             </span>
           ) : (
-            <button onClick={this.onToggleEditMode}>Edit</button>
+            <button onClick={this.onToggleCommentEditMode}>Edit</button>
           )}
 
-          {!editMode && (
-            <button onClick={() => this.onRemoveComment(uid, pentla)}>
+          {!CommentEditMode && (
+            <button onClick={() => this.onRemoveComment(MemUid, index)}>
               Delete comment
             </button>
           )}

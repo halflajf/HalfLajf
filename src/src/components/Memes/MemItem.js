@@ -11,18 +11,18 @@ class MemItem extends Component {
       comment: ""
     };
   }
-  onToggleeditUrlMode = () => {
+  onToggleEditUrlMode = () => {
     this.setState(state => ({
       editUrlMode: !state.editUrlMode,
       editUrl: this.props.mem.url
     }));
   };
 
-  onChangeeditUrl = event => {
+  onChangeEditUrl = event => {
     this.setState({ editUrl: event.target.value });
   };
 
-  onSaveeditUrl = () => {
+  onSaveEditUrl = () => {
     this.props.onEditMem(this.props.mem, this.state.editUrl);
 
     this.setState({ editUrlMode: false });
@@ -45,36 +45,33 @@ class MemItem extends Component {
   render() {
     const { authUser, mem, onRemoveMem } = this.props;
     const { editUrlMode, editUrl, comment } = this.state;
-    const dupa = mem.comments;
-    const memUid = this.props.mem.uid;
+
     return (
       <li>
         {editUrlMode ? (
-          <input type="text" value={editUrl} onChange={this.onChangeeditUrl} />
+          <input type="text" value={editUrl} onChange={this.onChangeEditUrl} />
         ) : (
           <span>
-            {console.log(mem)}
             <strong>{mem.userId}</strong> <img src={mem.url} />
-            {mem.editedAt && <span>(Edited)</span>}
           </span>
         )}
         {authUser.uid === mem.userId && (
           <span>
             {editUrlMode ? (
               <span>
-                <button onClick={this.onSaveeditUrl}>Save</button>
-                <button onClick={this.onToggleeditUrlMode}>Reset</button>
+                <button onClick={this.onSaveEditUrl}>Save</button>
+                <button onClick={this.onToggleEditUrlMode}>Return</button>
               </span>
             ) : (
-              <button onClick={this.onToggleeditUrlMode}>Edit</button>
+              <button onClick={this.onToggleEditUrlMode}>Edit</button>
             )}
             {!editUrlMode && (
               <button type="button" onClick={() => onRemoveMem(mem.uid)}>
                 Delete
               </button>
             )}
-            {dupa ? (
-              <CommentList memes={dupa} uid={memUid} />
+            {mem.comments ? (
+              <CommentList comments={mem.comments} MemUid={mem.uid} />
             ) : (
               <div>There are no comments ...</div>
             )}

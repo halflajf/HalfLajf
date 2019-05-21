@@ -112,7 +112,7 @@ class MemesBase extends Component {
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
-            {memes.length > limit - 1 && !loading && (
+            {memes && !loading && (
               <button type="button" onClick={this.onNextPage}>
                 More
               </button>

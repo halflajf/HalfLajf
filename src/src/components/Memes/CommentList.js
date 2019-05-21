@@ -1,10 +1,10 @@
 import React from "react";
 import CommentItem from "./CommentItem";
 
-const CommentList = ({ memes, uid }) => (
+const CommentList = ({ comments, MemUid }) => (
   <ul>
-    {memes.map((mem, i) => (
-      <CommentItem key={i} mem={mem} pentla={i} uid={uid} />
+    {comments.map((comment, i) => (
+      <CommentItem key={i} comment={comment} index={i} MemUid={MemUid} />
     ))}
   </ul>
 );
