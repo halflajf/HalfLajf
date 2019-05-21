@@ -1,32 +1,31 @@
 import React, { Component } from "react";
-import { withFirebase } from "../Firebase";
-import CommentItem from "./CommentItem";
+import CommentList from "./CommentList";
 
 class MemItem extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      editMode: false,
-      editText: this.props.mem.url,
+      editUrlMode: false,
+      editUrl: this.props.mem.url,
       comment: ""
     };
   }
-  onToggleEditMode = () => {
+  onToggleeditUrlMode = () => {
     this.setState(state => ({
-      editMode: !state.editMode,
-      editText: this.props.mem.url
+      editUrlMode: !state.editUrlMode,
+      editUrl: this.props.mem.url
     }));
   };
 
-  onChangeEditText = event => {
-    this.setState({ editText: event.target.value });
+  onChangeeditUrl = event => {
+    this.setState({ editUrl: event.target.value });
   };
 
-  onSaveEditText = () => {
-    this.props.onEditMem(this.props.mem, this.state.editText);
+  onSaveeditUrl = () => {
+    this.props.onEditMem(this.props.mem, this.state.editUrl);
 
-    this.setState({ editMode: false });
+    this.setState({ editUrlMode: false });
   };
 
   onSaveEditComment = () => {
@@ -36,7 +35,7 @@ class MemItem extends Component {
       this.props.authUser
     );
 
-    this.setState({ editMode: false, comment: "" });
+    this.setState({ editUrlMode: false, comment: "" });
   };
 
   onChangeComment = event => {
@@ -45,17 +44,13 @@ class MemItem extends Component {
 
   render() {
     const { authUser, mem, onRemoveMem } = this.props;
-    const { editMode, editText, comment } = this.state;
+    const { editUrlMode, editUrl, comment } = this.state;
     const dupa = mem.comments;
     const memUid = this.props.mem.uid;
     return (
       <li>
-        {editMode ? (
-          <input
-            type="text"
-            value={editText}
-            onChange={this.onChangeEditText}
-          />
+        {editUrlMode ? (
+          <input type="text" value={editUrl} onChange={this.onChangeeditUrl} />
         ) : (
           <span>
             {console.log(mem)}
@@ -65,15 +60,15 @@ class MemItem extends Component {
         )}
         {authUser.uid === mem.userId && (
           <span>
-            {editMode ? (
+            {editUrlMode ? (
               <span>
-                <button onClick={this.onSaveEditText}>Save</button>
-                <button onClick={this.onToggleEditMode}>Reset</button>
+                <button onClick={this.onSaveeditUrl}>Save</button>
+                <button onClick={this.onToggleeditUrlMode}>Reset</button>
               </span>
             ) : (
-              <button onClick={this.onToggleEditMode}>Edit</button>
+              <button onClick={this.onToggleeditUrlMode}>Edit</button>
             )}
-            {!editMode && (
+            {!editUrlMode && (
               <button type="button" onClick={() => onRemoveMem(mem.uid)}>
                 Delete
               </button>
@@ -96,13 +91,5 @@ class MemItem extends Component {
     );
   }
 }
-
-const CommentList = ({ memes, uid }) => (
-  <ul>
-    {memes.map((mem, i) => (
-      <CommentItem key={i} mem={mem} pentla={i} uid={uid} />
-    ))}
-  </ul>
-);
 
 export default MemItem;
