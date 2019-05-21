@@ -4,6 +4,7 @@ import MemItem from "./MemItem";
 
 const MemList = ({ memes, onRemoveMem, onEditMem, authUser, onAddComment }) => (
   <ul>
+    {console.log(memes)}
     {memes.map(mem => (
       <MemItem
         key={mem.uid}

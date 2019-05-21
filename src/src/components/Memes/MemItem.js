@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withFirebase } from "../Firebase";
+import CommentItem from "./CommentItem";
 
 class MemItem extends Component {
   constructor(props) {
@@ -45,6 +47,7 @@ class MemItem extends Component {
     const { authUser, mem, onRemoveMem } = this.props;
     const { editMode, editText, comment } = this.state;
     const dupa = mem.comments;
+    const memUid = this.props.mem.uid;
     return (
       <li>
         {editMode ? (
@@ -55,6 +58,7 @@ class MemItem extends Component {
           />
         ) : (
           <span>
+            {console.log(mem)}
             <strong>{mem.userId}</strong> <img src={mem.url} />
             {mem.editedAt && <span>(Edited)</span>}
           </span>
@@ -74,7 +78,8 @@ class MemItem extends Component {
                 Delete
               </button>
             )}
-            <CommentList memes={dupa} />
+
+            <CommentList memes={dupa} uid={memUid} />
             <input
               type="text"
               value={comment}
@@ -88,19 +93,12 @@ class MemItem extends Component {
   }
 }
 
-const CommentList = ({ memes }) => (
+const CommentList = ({ memes, uid }) => (
   <ul>
-    {console.log(memes)}
     {memes.map((mem, i) => (
-      <CommentItem key={i} mem={mem} />
+      <CommentItem key={i} mem={mem} pentla={i} uid={uid} />
     ))}
   </ul>
 );
 
-const CommentItem = ({ mem }) => (
-  <li>
-    {console.log(mem)}
-    <strong>{mem.userId}</strong> {mem.comment}
-  </li>
-);
 export default MemItem;

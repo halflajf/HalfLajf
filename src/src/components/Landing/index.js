@@ -130,6 +130,7 @@ class MemItem extends Component {
   render() {
     const { comment, authUser } = this.state;
     const { message } = this.props;
+    const memUid = this.props.message.uid;
 
     return (
       <li>
@@ -138,7 +139,12 @@ class MemItem extends Component {
           <strong> title {message.title}</strong>
           <br />
           <img src={message.url} />
-          <CommentList memes={message.comments} />
+          <CommentList
+            memes={message.comments}
+            uid={memUid}
+            authUser={this.state.authUser}
+          />
+          {console.log(authUser)}
           {authUser.uid && (
             <span>
               <input
@@ -155,20 +161,107 @@ class MemItem extends Component {
   }
 }
 
-const CommentList = ({ memes }) => (
+const CommentList = ({ memes, uid, authUser }) => (
   <ul>
     {memes.map((mem, i) => (
-      <CommentItem key={i} mem={mem} />
+      <CommentItem key={i} mem={mem} pentla={i} uid={uid} authUser={authUser} />
     ))}
   </ul>
 );
 
-const CommentItem = ({ mem }) => (
-  <li>
-    <strong>{mem.userId}</strong> {mem.comment}
-  </li>
-);
+class BaseCommentItem extends Component {
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      editMode: false,
+      editText: this.props.mem.comment,
+      authUser: {
+        uid: this.props.authUser.uid
+      }
+    };
+  }
+  onRemoveComment = (uid, id) => {
+    this.props.firebase.comment(uid, id).remove();
+  };
+
+  onToggleEditMode = () => {
+    this.setState(state => ({
+      editMode: !state.editMode,
+      editText: this.props.mem.comment
+    }));
+  };
+
+  onEditMessage = (uid, mem, message, pentla) => {
+    const { comment, ...commentSnapshot } = mem;
+
+    this.props.firebase.comment(uid, pentla).set({
+      comment: message,
+      ...commentSnapshot,
+      editedAt: this.props.firebase.serverValue.TIMESTAMP
+    });
+
+    this.setState({ editMode: false });
+  };
+
+  onChangeEditText = event => {
+    this.setState({ editText: event.target.value });
+  };
+
+  render() {
+    const { editMode, editText, authUser } = this.state;
+    const { mem, pentla, uid } = this.props;
+
+    return (
+      <span>
+        <li>
+          {editMode ? (
+            <input
+              type="text"
+              value={editText}
+              onChange={this.onChangeEditText}
+            />
+          ) : (
+            <span>
+              {mem.comment} {mem.editedAt && <span>(Edited)</span>}
+            </span>
+          )}
+
+          <span>
+            {editMode ? (
+              <span>
+                <button
+                  onClick={() => this.onEditMessage(uid, mem, editText, pentla)}
+                >
+                  Save
+                </button>
+                <button onClick={this.onToggleEditMode}>Cofnij</button>
+              </span>
+            ) : (
+              <button onClick={this.onToggleEditMode}>Edit</button>
+            )}
+
+            {!editMode && (
+              <button onClick={() => this.onRemoveComment(uid, pentla)}>
+                Delete comment
+              </button>
+            )}
+          </span>
+        </li>
+      </span>
+    );
+  }
+}
+
+/*
+ {authUser.uid === message.userId && (
+          <span>
+       </span>
+        )}
+
+          */
+
+const CommentItem = withFirebase(BaseCommentItem);
 const DisplayMemes = withFirebase(DisplayMemesBase);
 
 export default Landing;

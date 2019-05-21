@@ -45,6 +45,7 @@ class MessageItem extends Component {
             {message.text} {message.editedAt && <span>(Edited)</span>}
           </span>
         )}
+
         {authUser.uid === message.userId && (
           <span>
             {editMode ? (
@@ -54,15 +55,6 @@ class MessageItem extends Component {
               </span>
             ) : (
               <button onClick={this.onToggleEditMode}>Edit</button>
-            )}
-
-            {!editMode && (
-              <button
-                type="button"
-                onClick={() => onRemoveMessage(message.uid)}
-              >
-                Delete
-              </button>
             )}
           </span>
         )}

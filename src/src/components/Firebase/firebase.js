@@ -88,6 +88,8 @@ class Firebase {
       }
     });
 
+  // *** Merge Auth and comments User API *** //
+
   // *** User API ***
 
   user = uid => this.db.ref(`users/${uid}`);
@@ -105,6 +107,8 @@ class Firebase {
   mem = uid => this.db.ref(`memes/${uid}`);
 
   memes = () => this.db.ref("memes");
+
+  comment = (uid, id) => this.db.ref(`memes/${uid}/comments/${id}`);
 }
 
 export default Firebase;

@@ -87,6 +87,7 @@ class MemesBase extends Component {
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       comments: [
         {
+          userId: 0,
           comment: "Brak komentarzy"
         }
       ],
@@ -113,12 +114,14 @@ class MemesBase extends Component {
   };
 
   render() {
+    const { users } = this.props;
     const { url, memes, loading, title } = this.state;
 
     return (
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
+            {console.log(authUser)}
             {!loading && memes && (
               <button type="button" onClick={this.onNextPage}>
                 More
