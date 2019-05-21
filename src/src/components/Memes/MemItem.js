@@ -78,13 +78,17 @@ class MemItem extends Component {
                 Delete
               </button>
             )}
-
-            <CommentList memes={dupa} uid={memUid} />
+            {dupa ? (
+              <CommentList memes={dupa} uid={memUid} />
+            ) : (
+              <div>There are no comments ...</div>
+            )}
             <input
               type="text"
               value={comment}
               onChange={this.onChangeComment}
             />
+
             <button onClick={this.onSaveEditComment}>Add comment</button>
           </span>
         )}

@@ -27,18 +27,15 @@ class MemesBase extends Component {
   onAddComment = (mem, message, authUser) => {
     const { uid, ...memSnapshot } = mem;
     let { comments } = mem;
-
     let comment = {
       userId: authUser.uid,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       comment: message
     };
 
-    if (comments[0].comment == "Brak komentarzy") {
-      comments.splice(0, 1);
-    }
-    comments.push(comment);
+    if (!comments) comments = [];
 
+    comments.push(comment);
     this.props.firebase.mem(mem.uid).set({
       ...memSnapshot,
       comments
@@ -85,12 +82,7 @@ class MemesBase extends Component {
       url: this.state.url,
       userId: authUser.uid,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
-      comments: [
-        {
-          userId: 0,
-          comment: "Brak komentarzy"
-        }
-      ],
+      comments: [],
       title: this.state.title
     });
 
@@ -114,15 +106,13 @@ class MemesBase extends Component {
   };
 
   render() {
-    const { users } = this.props;
-    const { url, memes, loading, title } = this.state;
+    const { url, memes, loading, title, limit } = this.state;
 
     return (
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
-            {console.log(authUser)}
-            {!loading && memes && (
+            {memes.length > limit - 1 && !loading && (
               <button type="button" onClick={this.onNextPage}>
                 More
               </button>
