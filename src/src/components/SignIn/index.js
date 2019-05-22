@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { compose } from 'recompose';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { compose } from "recompose";
 
-import { SignUpLink } from '../SignUp';
-import { PasswordForgetLink } from '../PasswordForget';
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
+import { SignUpLink } from "../SignUp";
+import { PasswordForgetLink } from "../PasswordForget";
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
 
 const SignInPage = () => (
   <div>
@@ -19,13 +19,13 @@ const SignInPage = () => (
 );
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
+  email: "",
+  password: "",
+  error: null
 };
 
 const ERROR_CODE_ACCOUNT_EXISTS =
-  'auth/account-exists-with-different-credential';
+  "auth/account-exists-with-different-credential";
 
 const ERROR_MSG_ACCOUNT_EXISTS = `
   An account with an E-Mail address to
@@ -64,7 +64,7 @@ class SignInFormBase extends Component {
   render() {
     const { email, password, error } = this.state;
 
-    const isInvalid = password === '' || email === '';
+    const isInvalid = password === "" || email === "";
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -107,7 +107,7 @@ class SignInGoogleBase extends Component {
         return this.props.firebase.user(socialAuthUser.user.uid).set({
           username: socialAuthUser.user.displayName,
           email: socialAuthUser.user.email,
-          roles: [],
+          roles: []
         });
       })
       .then(() => {
@@ -152,9 +152,9 @@ class SignInFacebookBase extends Component {
         // Create a user in your Firebase Realtime Database too
         return this.props.firebase.user(socialAuthUser.user.uid).set({
           username: socialAuthUser.additionalUserInfo.profile.name,
-          email: 'sebaztian60@gmail.com',
+          email: "sebaztian60@gmail.com",
           //email: socialAuthUser.additionalUserInfo.profile.email,
-          roles: [],
+          roles: []
         });
       })
       .then(() => {
@@ -187,17 +187,17 @@ class SignInFacebookBase extends Component {
 
 const SignInForm = compose(
   withRouter,
-  withFirebase,
+  withFirebase
 )(SignInFormBase);
 
 const SignInGoogle = compose(
   withRouter,
-  withFirebase,
+  withFirebase
 )(SignInGoogleBase);
 
 const SignInFacebook = compose(
   withRouter,
-  withFirebase,
+  withFirebase
 )(SignInFacebookBase);
 
 export default SignInPage;

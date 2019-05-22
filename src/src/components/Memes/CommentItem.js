@@ -11,6 +11,9 @@ class CommentItem extends Component {
     };
   }
   onRemoveComment = (MemUid, index) => {
+    {
+      console.log(index);
+    }
     this.props.firebase.comment(MemUid, index).remove();
   };
 

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { AuthUserContext } from "../Session";
 import { withFirebase } from "../Firebase";
 import MemList from "./MemList";
+import * as ROLES from "../../constants/roles";
 
 class MemesBase extends Component {
   constructor(props) {
@@ -51,7 +52,9 @@ class MemesBase extends Component {
       .on("value", snapshot => {
         // convert messages list from snapshot
         const memObject = snapshot.val();
-
+        {
+          console.log(memObject);
+        }
         if (memObject) {
           // convert messages list from snapshot
           const memesList = Object.keys(memObject).map(key => ({
@@ -106,7 +109,7 @@ class MemesBase extends Component {
   };
 
   render() {
-    const { url, memes, loading, title, limit } = this.state;
+    const { url, memes, loading, title } = this.state;
 
     return (
       <AuthUserContext.Consumer>

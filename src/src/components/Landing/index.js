@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
 import { AuthUserContext } from "../Session";
+import Memes from "../Memes";
 
 const Landing = () => (
   <div>
@@ -139,12 +140,6 @@ class MemItem extends Component {
           <strong> title {message.title}</strong>
           <br />
           <img src={message.url} />
-          <CommentList
-            memes={message.comments}
-            uid={memUid}
-            authUser={this.state.authUser}
-          />
-          {console.log(authUser)}
           {authUser.uid && (
             <span>
               <input
