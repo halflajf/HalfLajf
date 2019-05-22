@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withFirebase } from "../Firebase";
+import * as ROLES from "../../constants/roles";
 
 class CommentItem extends Component {
   constructor(props) {
@@ -42,48 +43,74 @@ class CommentItem extends Component {
 
   render() {
     const { CommentEditMode, editComment } = this.state;
-    const { comment, index, MemUid } = this.props;
+    const { comment, index, MemUid, authUser } = this.props;
 
     return (
-      <span>
-        <li>
-          {CommentEditMode ? (
-            <input
-              type="text"
-              value={editComment}
-              onChange={this.onChangeeditComment}
-            />
-          ) : (
+      <li>
+        {CommentEditMode ? (
+          <input
+            type="text"
+            value={editComment}
+            onChange={this.onChangeeditComment}
+          />
+        ) : (
+          <span>
+            {comment.comment}
+            {comment.editedAt && (
+              <span> (Edited) DateToCount {comment.editedAt}</span>
+            )}
+          </span>
+        )}
+        {authUser.roles.includes(ROLES.ADMIN) && (
+          <span>
+            {CommentEditMode ? (
+              <span>
+                <button
+                  onClick={() =>
+                    this.onEditMessage(MemUid, comment, editComment, index)
+                  }
+                >
+                  Save
+                </button>
+                <button onClick={this.onToggleCommentEditMode}>Cofnij</button>
+              </span>
+            ) : (
+              <button onClick={this.onToggleCommentEditMode}>Edit</button>
+            )}
+
+            {!CommentEditMode && (
+              <button onClick={() => this.onRemoveComment(MemUid, index)}>
+                Delete comment
+              </button>
+            )}
+          </span>
+        )}
+        {authUser.uid === comment.userId &&
+          !authUser.roles.includes(ROLES.ADMIN) && (
             <span>
-              {comment.comment}
-              {comment.editedAt && (
-                <span> (Edited) DateToCount {comment.editedAt}</span>
+              {CommentEditMode ? (
+                <span>
+                  <button
+                    onClick={() =>
+                      this.onEditMessage(MemUid, comment, editComment, index)
+                    }
+                  >
+                    Save
+                  </button>
+                  <button onClick={this.onToggleCommentEditMode}>Cofnij</button>
+                </span>
+              ) : (
+                <button onClick={this.onToggleCommentEditMode}>Edit</button>
+              )}
+
+              {!CommentEditMode && (
+                <button onClick={() => this.onRemoveComment(MemUid, index)}>
+                  Delete comment
+                </button>
               )}
             </span>
           )}
-
-          {CommentEditMode ? (
-            <span>
-              <button
-                onClick={() =>
-                  this.onEditMessage(MemUid, comment, editComment, index)
-                }
-              >
-                Save
-              </button>
-              <button onClick={this.onToggleCommentEditMode}>Cofnij</button>
-            </span>
-          ) : (
-            <button onClick={this.onToggleCommentEditMode}>Edit</button>
-          )}
-
-          {!CommentEditMode && (
-            <button onClick={() => this.onRemoveComment(MemUid, index)}>
-              Delete comment
-            </button>
-          )}
-        </li>
-      </span>
+      </li>
     );
   }
 }

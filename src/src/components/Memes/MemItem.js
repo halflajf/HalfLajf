@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CommentList from "./CommentList";
+import * as ROLES from "../../constants/roles";
 
 class MemItem extends Component {
   constructor(props) {
@@ -55,35 +56,36 @@ class MemItem extends Component {
             <strong>{mem.userId}</strong> <img src={mem.url} />
           </span>
         )}
-        {authUser.uid === mem.userId && (
-          <span>
-            {editUrlMode ? (
-              <span>
-                <button onClick={this.onSaveEditUrl}>Save</button>
-                <button onClick={this.onToggleEditUrlMode}>Return</button>
-              </span>
-            ) : (
-              <button onClick={this.onToggleEditUrlMode}>Edit</button>
-            )}
-            {!editUrlMode && (
-              <button type="button" onClick={() => onRemoveMem(mem.uid)}>
-                Delete
-              </button>
-            )}
-            {mem.comments ? (
-              <CommentList comments={mem.comments} MemUid={mem.uid} />
-            ) : (
-              <div>There are no comments ...</div>
-            )}
-            <input
-              type="text"
-              value={comment}
-              onChange={this.onChangeComment}
-            />
-
-            <button onClick={this.onSaveEditComment}>Add comment</button>
-          </span>
+        {authUser.uid === mem.userId ||
+          (authUser.roles.includes(ROLES.ADMIN) && (
+            <span>
+              {editUrlMode ? (
+                <span>
+                  <button onClick={this.onSaveEditUrl}>Save</button>
+                  <button onClick={this.onToggleEditUrlMode}>Return</button>
+                </span>
+              ) : (
+                <button onClick={this.onToggleEditUrlMode}>Edit</button>
+              )}
+              {!editUrlMode && (
+                <button type="button" onClick={() => onRemoveMem(mem.uid)}>
+                  Delete
+                </button>
+              )}
+            </span>
+          ))}
+        {mem.comments ? (
+          <CommentList
+            comments={mem.comments}
+            MemUid={mem.uid}
+            authUser={authUser}
+          />
+        ) : (
+          <div>There are no comments ...</div>
         )}
+        <input type="text" value={comment} onChange={this.onChangeComment} />
+
+        <button onClick={this.onSaveEditComment}>Add comment</button>
       </li>
     );
   }
