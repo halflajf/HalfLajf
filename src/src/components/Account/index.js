@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
+import React, { Component } from "react";
+import { compose } from "recompose";
 
 import {
   AuthUserContext,
   withAuthorization,
-  withEmailVerification,
-} from '../Session';
-import { withFirebase } from '../Firebase';
-import { PasswordForgetForm } from '../PasswordForget';
-import PasswordChangeForm from '../PasswordChange';
+  withEmailVerification
+} from "../Session";
+import { withFirebase } from "../Firebase";
+import { PasswordForgetForm } from "../PasswordForget";
+import PasswordChangeForm from "../PasswordChange";
 
 const SIGN_IN_METHODS = [
   {
-    id: 'password',
-    provider: null,
+    id: "password",
+    provider: null
   },
   {
-    id: 'google.com',
-    provider: 'googleProvider',
+    id: "google.com",
+    provider: "googleProvider"
   },
   {
-    id: 'facebook.com',
-    provider: 'facebookProvider',
-  },
+    id: "facebook.com",
+    provider: "facebookProvider"
+  }
 ];
 
 const AccountPage = () => (
@@ -44,7 +44,7 @@ class LoginManagementBase extends Component {
 
     this.state = {
       activeSignInMethods: [],
-      error: null,
+      error: null
     };
   }
 
@@ -56,7 +56,7 @@ class LoginManagementBase extends Component {
     this.props.firebase.auth
       .fetchSignInMethodsForEmail(this.props.authUser.email)
       .then(activeSignInMethods =>
-        this.setState({ activeSignInMethods, error: null }),
+        this.setState({ activeSignInMethods, error: null })
       )
       .catch(error => this.setState({ error }));
   };
@@ -71,7 +71,7 @@ class LoginManagementBase extends Component {
   onDefaultLoginLink = password => {
     const credential = this.props.firebase.emailAuthProvider.credential(
       this.props.authUser.email,
-      password,
+      password
     );
 
     this.props.firebase.auth.currentUser
@@ -96,13 +96,11 @@ class LoginManagementBase extends Component {
         <ul>
           {SIGN_IN_METHODS.map(signInMethod => {
             const onlyOneLeft = activeSignInMethods.length === 1;
-            const isEnabled = activeSignInMethods.includes(
-              signInMethod.id,
-            );
+            const isEnabled = activeSignInMethods.includes(signInMethod.id);
 
             return (
               <li key={signInMethod.id}>
-                {signInMethod.id === 'password' ? (
+                {signInMethod.id === "password" ? (
                   <DefaultLoginToggle
                     onlyOneLeft={onlyOneLeft}
                     isEnabled={isEnabled}
@@ -134,7 +132,7 @@ const SocialLoginToggle = ({
   isEnabled,
   signInMethod,
   onLink,
-  onUnlink,
+  onUnlink
 }) =>
   isEnabled ? (
     <button
@@ -145,10 +143,7 @@ const SocialLoginToggle = ({
       Deactivate {signInMethod.id}
     </button>
   ) : (
-    <button
-      type="button"
-      onClick={() => onLink(signInMethod.provider)}
-    >
+    <button type="button" onClick={() => onLink(signInMethod.provider)}>
       Link {signInMethod.id}
     </button>
   );
@@ -157,14 +152,14 @@ class DefaultLoginToggle extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { passwordOne: '', passwordTwo: '' };
+    this.state = { passwordOne: "", passwordTwo: "" };
   }
 
   onSubmit = event => {
     event.preventDefault();
 
     this.props.onLink(this.state.passwordOne);
-    this.setState({ passwordOne: '', passwordTwo: '' });
+    this.setState({ passwordOne: "", passwordTwo: "" });
   };
 
   onChange = event => {
@@ -172,17 +167,11 @@ class DefaultLoginToggle extends Component {
   };
 
   render() {
-    const {
-      onlyOneLeft,
-      isEnabled,
-      signInMethod,
-      onUnlink,
-    } = this.props;
+    const { onlyOneLeft, isEnabled, signInMethod, onUnlink } = this.props;
 
     const { passwordOne, passwordTwo } = this.state;
 
-    const isInvalid =
-      passwordOne !== passwordTwo || passwordOne === '';
+    const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
 
     return isEnabled ? (
       <button
@@ -223,5 +212,5 @@ const condition = authUser => !!authUser;
 
 export default compose(
   withEmailVerification,
-  withAuthorization(condition),
+  withAuthorization(condition)
 )(AccountPage);

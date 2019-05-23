@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import { compose } from 'recompose';
+import React, { Component } from "react";
+import { compose } from "recompose";
 
-import { withAuthorization, withEmailVerification } from '../Session';
-import { withFirebase } from '../Firebase';
-import Messages from '../Messages';
+import { withAuthorization, withEmailVerification } from "../Session";
+import { withFirebase } from "../Firebase";
+import Messages from "../Messages";
 
 class HomePage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      users: null,
+      users: null
     };
   }
 
   componentDidMount() {
-    this.props.firebase.users().on('value', snapshot => {
+    this.props.firebase.users().on("value", snapshot => {
       this.setState({
-        users: snapshot.val(),
+        users: snapshot.val()
       });
     });
   }
@@ -27,12 +27,11 @@ class HomePage extends Component {
   }
 
   render() {
+    // <Messages users={this.state.users} />
     return (
       <div>
         <h1>Home Page</h1>
         <p>The Home Page is accessible by every signed in user.</p>
-
-        <Messages users={this.state.users} />
       </div>
     );
   }
@@ -43,5 +42,5 @@ const condition = authUser => !!authUser;
 export default compose(
   withFirebase,
   withEmailVerification,
-  withAuthorization(condition),
+  withAuthorization(condition)
 )(HomePage);
