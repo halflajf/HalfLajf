@@ -53,7 +53,7 @@ class MemItem extends Component {
           <input type="text" value={editUrl} onChange={this.onChangeEditUrl} />
         ) : (
           <span>
-            <strong>{mem.userId}</strong> <img src={mem.url} />
+            <strong>{mem.userId}</strong> <img src={mem.url} alt="" />
           </span>
         )}
         {!authUser ? (

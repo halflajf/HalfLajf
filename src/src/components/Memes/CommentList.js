@@ -3,7 +3,6 @@ import CommentItem from "./CommentItem";
 
 const CommentList = ({ comments, MemUid, authUser }) => (
   <ul>
-    {console.log(comments)}
     {comments.map((comment, i) => (
       <CommentItem
         key={i}
