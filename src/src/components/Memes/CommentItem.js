@@ -13,6 +13,7 @@ class CommentItem extends Component {
   }
   onRemoveComment = (MemUid, index) => {
     this.props.firebase.comment(MemUid, index).set([]);
+    //zrobic tak ze pobeirac cale i setowac bez elementu odnawaijac comments[]
   };
 
   onToggleCommentEditMode = () => {

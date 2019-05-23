@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
 import { compose } from "recompose";
 
@@ -7,6 +7,7 @@ import { UserList, UserItem } from "../Users";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
 import Memes from "../Memes";
+import AdminView from "../Memes/adminView";
 
 const AdminPage = () => (
   <div>
@@ -16,10 +17,20 @@ const AdminPage = () => (
       <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
       <Route exact path={ROUTES.ADMIN} component={UserList} />
     </Switch>
-    <Memes />
+    <AdminMemes />
   </div>
 );
 
+class AdminMemes extends Component {
+  render() {
+    return (
+      <div>
+        <AdminView />
+        <Memes />
+      </div>
+    );
+  }
+}
 const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
 export default compose(
   withEmailVerification,
