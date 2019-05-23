@@ -52,9 +52,20 @@ class CommentItem extends Component {
           />
         ) : (
           <span>
+            Created by: {comment.username || comment.userId} <br />
             {comment.comment}
-            {comment.editedAt && (
-              <span> (Edited) DateToCount {comment.editedAt}</span>
+            {!comment.editedAt ? (
+              <div>
+                Created At:{" "}
+                {new Date(comment.createdAt).toLocaleTimeString("en-US")}{" "}
+                {new Date(comment.createdAt).toLocaleDateString("en-US")}
+              </div>
+            ) : (
+              <div>
+                Edited At:{" "}
+                {new Date(comment.editedAt).toLocaleTimeString("en-US")}{" "}
+                {new Date(comment.editedAt).toLocaleDateString("en-US")}
+              </div>
             )}
           </span>
         )}

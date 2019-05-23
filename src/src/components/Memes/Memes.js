@@ -30,6 +30,7 @@ class MemesBase extends Component {
     let { comments } = mem;
     let comment = {
       userId: authUser.uid,
+      username: authUser.username,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       comment: message
     };

@@ -57,9 +57,17 @@ class MemItem extends Component {
               Created by: {mem.username || mem.userId} <br />
               Title: {mem.title}
               {!mem.editedAt ? (
-                <div>Created At: {mem.createdAt}</div>
+                <div>
+                  Created At:{" "}
+                  {new Date(mem.createdAt).toLocaleTimeString("en-US")}{" "}
+                  {new Date(mem.createdAt).toLocaleDateString("en-US")}
+                </div>
               ) : (
-                <div>Edited At: {mem.editedAt}</div>
+                <div>
+                  Edited At:{" "}
+                  {new Date(mem.editedAt).toLocaleTimeString("en-US")}{" "}
+                  {new Date(mem.editedAt).toLocaleDateString("en-US")}
+                </div>
               )}
             </strong>{" "}
             <br />
