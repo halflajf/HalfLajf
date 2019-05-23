@@ -12,7 +12,7 @@ class CommentItem extends Component {
     };
   }
   onRemoveComment = (MemUid, index) => {
-    this.props.firebase.comment(MemUid, index).remove();
+    this.props.firebase.comment(MemUid, index).set([]);
   };
 
   onToggleCommentEditMode = () => {
@@ -26,9 +26,9 @@ class CommentItem extends Component {
     const { comment, ...commentSnapshot } = commentObj;
 
     this.props.firebase.comment(MemUid, index).set({
-      comment: message,
       ...commentSnapshot,
-      editedAt: this.props.firebase.serverValue.TIMESTAMP
+      editedAt: this.props.firebase.serverValue.TIMESTAMP,
+      comment: message
     });
 
     this.setState({ CommentEditMode: false });
