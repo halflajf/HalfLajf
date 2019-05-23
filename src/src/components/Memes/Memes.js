@@ -84,6 +84,7 @@ class MemesBase extends Component {
     this.props.firebase.memes().push({
       url: this.state.url,
       userId: authUser.uid,
+      username: authUser.username,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       comments: [],
       title: this.state.title

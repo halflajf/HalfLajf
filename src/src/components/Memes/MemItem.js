@@ -53,7 +53,17 @@ class MemItem extends Component {
           <input type="text" value={editUrl} onChange={this.onChangeEditUrl} />
         ) : (
           <span>
-            <strong>{mem.userId}</strong> <img src={mem.url} alt="" />
+            <strong>
+              Created by: {mem.username || mem.userId} <br />
+              Title: {mem.title}
+              {!mem.editedAt ? (
+                <div>Created At: {mem.createdAt}</div>
+              ) : (
+                <div>Edited At: {mem.editedAt}</div>
+              )}
+            </strong>{" "}
+            <br />
+            <img src={mem.url} alt="" />
           </span>
         )}
         {!authUser ? (
@@ -81,11 +91,15 @@ class MemItem extends Component {
           </span>
         )}
         {mem.comments ? (
-          <CommentList
-            comments={mem.comments}
-            MemUid={mem.uid}
-            authUser={authUser}
-          />
+          <div>
+            {" "}
+            Comments:
+            <CommentList
+              comments={mem.comments}
+              MemUid={mem.uid}
+              authUser={authUser}
+            />
+          </div>
         ) : (
           <div>There are no comments ...</div>
         )}

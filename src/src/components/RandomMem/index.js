@@ -18,9 +18,6 @@ class RandomMem extends Component {
   }
 
   getRandomMem = () => {
-    {
-      console.log(this.state);
-    }
     this.setState({ isLoading: true });
 
     fetch(API)
