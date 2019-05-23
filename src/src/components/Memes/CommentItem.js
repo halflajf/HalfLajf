@@ -61,55 +61,70 @@ class CommentItem extends Component {
             )}
           </span>
         )}
-        {authUser.roles.includes(ROLES.ADMIN) && (
+        {!authUser ? (
+          <span />
+        ) : (
           <span>
-            {CommentEditMode ? (
+            {authUser.roles.includes(ROLES.ADMIN) && (
               <span>
-                <button
-                  onClick={() =>
-                    this.onEditMessage(MemUid, comment, editComment, index)
-                  }
-                >
-                  Save
-                </button>
-                <button onClick={this.onToggleCommentEditMode}>Cofnij</button>
-              </span>
-            ) : (
-              <button onClick={this.onToggleCommentEditMode}>Edit</button>
-            )}
+                {CommentEditMode ? (
+                  <span>
+                    <button
+                      onClick={() =>
+                        this.onEditMessage(MemUid, comment, editComment, index)
+                      }
+                    >
+                      Save
+                    </button>
+                    <button onClick={this.onToggleCommentEditMode}>
+                      Cofnij
+                    </button>
+                  </span>
+                ) : (
+                  <button onClick={this.onToggleCommentEditMode}>Edit</button>
+                )}
 
-            {!CommentEditMode && (
-              <button onClick={() => this.onRemoveComment(MemUid, index)}>
-                Delete comment
-              </button>
+                {!CommentEditMode && (
+                  <button onClick={() => this.onRemoveComment(MemUid, index)}>
+                    Delete comment
+                  </button>
+                )}
+              </span>
             )}
+            {authUser.uid === comment.userId &&
+              !authUser.roles.includes(ROLES.ADMIN) && (
+                <span>
+                  {CommentEditMode ? (
+                    <span>
+                      <button
+                        onClick={() =>
+                          this.onEditMessage(
+                            MemUid,
+                            comment,
+                            editComment,
+                            index
+                          )
+                        }
+                      >
+                        Save
+                      </button>
+                      <button onClick={this.onToggleCommentEditMode}>
+                        Cofnij
+                      </button>
+                    </span>
+                  ) : (
+                    <button onClick={this.onToggleCommentEditMode}>Edit</button>
+                  )}
+
+                  {!CommentEditMode && (
+                    <button onClick={() => this.onRemoveComment(MemUid, index)}>
+                      Delete comment
+                    </button>
+                  )}
+                </span>
+              )}
           </span>
         )}
-        {authUser.uid === comment.userId &&
-          !authUser.roles.includes(ROLES.ADMIN) && (
-            <span>
-              {CommentEditMode ? (
-                <span>
-                  <button
-                    onClick={() =>
-                      this.onEditMessage(MemUid, comment, editComment, index)
-                    }
-                  >
-                    Save
-                  </button>
-                  <button onClick={this.onToggleCommentEditMode}>Cofnij</button>
-                </span>
-              ) : (
-                <button onClick={this.onToggleCommentEditMode}>Edit</button>
-              )}
-
-              {!CommentEditMode && (
-                <button onClick={() => this.onRemoveComment(MemUid, index)}>
-                  Delete comment
-                </button>
-              )}
-            </span>
-          )}
       </li>
     );
   }

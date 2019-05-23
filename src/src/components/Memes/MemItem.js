@@ -56,24 +56,30 @@ class MemItem extends Component {
             <strong>{mem.userId}</strong> <img src={mem.url} />
           </span>
         )}
-        {authUser.uid === mem.userId ||
-          (authUser.roles.includes(ROLES.ADMIN) && (
-            <span>
-              {editUrlMode ? (
+        {!authUser ? (
+          <span />
+        ) : (
+          <span>
+            {authUser.uid === mem.userId ||
+              (authUser.roles.includes(ROLES.ADMIN) && (
                 <span>
-                  <button onClick={this.onSaveEditUrl}>Save</button>
-                  <button onClick={this.onToggleEditUrlMode}>Return</button>
+                  {editUrlMode ? (
+                    <span>
+                      <button onClick={this.onSaveEditUrl}>Save</button>
+                      <button onClick={this.onToggleEditUrlMode}>Return</button>
+                    </span>
+                  ) : (
+                    <button onClick={this.onToggleEditUrlMode}>Edit</button>
+                  )}
+                  {!editUrlMode && (
+                    <button type="button" onClick={() => onRemoveMem(mem.uid)}>
+                      Delete
+                    </button>
+                  )}
                 </span>
-              ) : (
-                <button onClick={this.onToggleEditUrlMode}>Edit</button>
-              )}
-              {!editUrlMode && (
-                <button type="button" onClick={() => onRemoveMem(mem.uid)}>
-                  Delete
-                </button>
-              )}
-            </span>
-          ))}
+              ))}
+          </span>
+        )}
         {mem.comments ? (
           <CommentList
             comments={mem.comments}
@@ -83,9 +89,19 @@ class MemItem extends Component {
         ) : (
           <div>There are no comments ...</div>
         )}
-        <input type="text" value={comment} onChange={this.onChangeComment} />
+        {!authUser ? (
+          <span />
+        ) : (
+          <span>
+            <input
+              type="text"
+              value={comment}
+              onChange={this.onChangeComment}
+            />
 
-        <button onClick={this.onSaveEditComment}>Add comment</button>
+            <button onClick={this.onSaveEditComment}>Add comment</button>
+          </span>
+        )}
       </li>
     );
   }
