@@ -23,9 +23,6 @@ const NavigationAuth = ({ authUser }) => (
       <Link to={ROUTES.RANDOM_MEM}>Random Mem</Link>
     </li>
     <li>
-      <Link to={ROUTES.HOME}>Home</Link>
-    </li>
-    <li>
       <Link to={ROUTES.ACCOUNT}>Account</Link>
     </li>
     {authUser.roles.includes(ROLES.ADMIN) && (
