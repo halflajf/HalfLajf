@@ -61,45 +61,19 @@ class MemItem extends Component {
     });
   };
   onDislike = (mem, userId) => {
-    console.log(userId);
-    let memesList;
+    let likes;
     if (mem.likes) {
-      memesList = Object.keys(mem.likes).map(key => ({
+      likes = Object.keys(mem.likes).map(key => ({
         ...mem.likes[key],
         uid: key
       }));
-      console.log(memesList);
-      console.log(memesList.filter(like => like.userId == userId));
-      const dobry = memesList.filter(like => like.userId == userId);
-      console.log(dobry);
-      console.log(dobry[0].uid);
-      this.props.firebase.dislike(mem.uid, dobry[0].uid).remove();
+
+      const userLike = likes.filter(like => like.userId == userId);
+
+      this.props.firebase.dislike(mem.uid, userLike[0].uid).remove();
     }
-    // this.props.firebase.dislike(mem.uid, memesList.uid).set([]);
   };
 
-  /*
-  onDislike = (mem, userId) => {
-    console.log("in?");
-    this.props.firebase.dislikes(mem.uid).on("value", snapshot => {
-      // convert messages list from snapshot
-      const memObject = snapshot.val();
-      let memesList;
-
-      if (memObject)
-        memesList = Object.keys(memObject).map(key => ({
-          ...memObject[key],
-          uid: key
-        }));
-      if (memesList) {
-        let userUid = memesList.filter(user => user.userId == userId);
-        this.props.firebase.dislike(mem.uid, userUid[0].uid).remove();
-      }
-    });
-
-    //zrobic tak ze pobeirac cale i setowac bez elementu odnawaijac comments[]
-  };
-*/
   render() {
     const { authUser, mem, onRemoveMem } = this.props;
     const { editUrlMode, editUrl, comment } = this.state;
