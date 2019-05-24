@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { AuthUserContext } from "../Session";
 import { withFirebase } from "../Firebase";
 import MemList from "./MemList";
-import * as ROLES from "../../constants/roles";
 
 class MemesBase extends Component {
   constructor(props) {
@@ -73,28 +72,6 @@ class MemesBase extends Component {
     this.props.firebase.memes().off();
   }
 
-  onChangeText = event => {
-    this.setState({ url: event.target.value });
-  };
-
-  onChangeTitle = event => {
-    this.setState({ title: event.target.value });
-  };
-  onCreateMem = (event, authUser) => {
-    this.props.firebase.memes().push({
-      url: this.state.url,
-      userId: authUser.uid,
-      username: authUser.username,
-      createdAt: this.props.firebase.serverValue.TIMESTAMP,
-      comments: [],
-      title: this.state.title
-    });
-
-    this.setState({ url: "", title: "" });
-
-    event.preventDefault();
-  };
-
   onEditMem = (mem, url) => {
     const { uid, ...memSnapshot } = mem;
 
@@ -110,7 +87,7 @@ class MemesBase extends Component {
   };
 
   render() {
-    const { url, memes, loading, title } = this.state;
+    const { memes, loading } = this.state;
 
     return (
       <AuthUserContext.Consumer>

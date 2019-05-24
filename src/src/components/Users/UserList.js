@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
-import { withFirebase } from '../Firebase';
-import * as ROUTES from '../../constants/routes';
+import { withFirebase } from "../Firebase";
+import * as ROUTES from "../../constants/routes";
 
 class UserList extends Component {
   constructor(props) {
@@ -10,24 +10,24 @@ class UserList extends Component {
 
     this.state = {
       loading: false,
-      users: [],
+      users: []
     };
   }
 
   componentDidMount() {
     this.setState({ loading: true });
 
-    this.props.firebase.users().on('value', snapshot => {
+    this.props.firebase.users().on("value", snapshot => {
       const usersObject = snapshot.val();
 
       const usersList = Object.keys(usersObject).map(key => ({
         ...usersObject[key],
-        uid: key,
+        uid: key
       }));
 
       this.setState({
         users: usersList,
-        loading: false,
+        loading: false
       });
     });
   }
@@ -41,6 +41,25 @@ class UserList extends Component {
 
     return (
       <div>
+        {" "}
+        <div>
+          <Link
+            to={{
+              pathname: `${ROUTES.ADMIN_ADD_MEM}`
+            }}
+          >
+            Add mem
+          </Link>
+        </div>
+        <div>
+          <Link
+            to={{
+              pathname: `${ROUTES.ADMIN_MANAGE_MEM}`
+            }}
+          >
+            Manage mem
+          </Link>
+        </div>
         <h2>Users</h2>
         {loading && <div>Loading ...</div>}
         <ul>
@@ -54,12 +73,12 @@ class UserList extends Component {
               </span>
               <span>
                 <strong>Username:</strong> {user.username}
-              </span>
+              </span>{" "}
               <span>
                 <Link
                   to={{
                     pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                    state: { user },
+                    state: { user }
                   }}
                 >
                   Details

@@ -100,6 +100,12 @@ class Firebase {
   memes = () => this.db.ref("memes");
 
   comment = (uid, id) => this.db.ref(`memes/${uid}/comments/${id}`);
+
+  likes = uid => this.db.ref(`memes/${uid}`);
+
+  dislikes = uid => this.db.ref(`memes/${uid}`).child(`likes`);
+
+  dislike = (uid, userId) => this.db.ref(`memes/${uid}/likes/${userId}`);
 }
 
 export default Firebase;

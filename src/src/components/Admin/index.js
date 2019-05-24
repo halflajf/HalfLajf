@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { compose } from "recompose";
 
@@ -6,31 +6,21 @@ import { withAuthorization, withEmailVerification } from "../Session";
 import { UserList, UserItem } from "../Users";
 import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
-import Memes from "../Memes";
-import AdminView from "../Memes/adminView";
+import CreateMem from "./createMem";
+import { EditMem } from "./createMem";
 
 const AdminPage = () => (
   <div>
-    <h1>Admin</h1>
+    <h1>Admin Page</h1>
     <p>The Admin Page is accessible by every signed in admin user.</p>
     <Switch>
+      <Route exact path={ROUTES.ADMIN_ADD_MEM} component={CreateMem} />
       <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
       <Route exact path={ROUTES.ADMIN} component={UserList} />
     </Switch>
-    <AdminMemes />
   </div>
 );
 
-class AdminMemes extends Component {
-  render() {
-    return (
-      <div>
-        <AdminView />
-        <Memes />
-      </div>
-    );
-  }
-}
 const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
 export default compose(
   withEmailVerification,
