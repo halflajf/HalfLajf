@@ -7,7 +7,7 @@ const MemeSummary = () => {
         <span style={{fontWeight: "bold"}} className="card-title">Meme Title</span>
       </div>
       <div class="card-image">
-        <img width="100%" height="auto" src={require('./testMeme.png')} />
+        <img src={require('./testMeme.png')} alt="Dank meme"/>
       </div>
     </div>
     )

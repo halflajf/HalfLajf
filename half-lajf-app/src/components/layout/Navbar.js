@@ -2,18 +2,19 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
-import Sidebar from './Sidebar'
+import Sidenav from './Sidenav'
 
 const Navbar = () => {
   return (
-    <div class="navbar-fixed">
-      <nav>
+    <div class="navbar-fixed" style={{zIndex: 999}}>
+      <nav class="nav-extended">
         <div class="nav-wrapper grey darken-3">
-        <Sidebar />
-        <Link to='/' className="brand-logo" ><span class="orange-text text-darken-2">HalfLajf</span></Link>
+        <Link to='/' className="brand-logo left"><span class="orange-text text-darken-2">HalfLajf</span></Link>
+        <Sidenav />
         <SignedInLinks />
         <SignedOutLinks />
-        <ul id="nav-mobile" class="right">
+        <ul class="right hide-on-med-and-down">
+          <li><Link to='/'>Categories</Link></li>
           <li><Link to='/'>Random meme</Link></li>
         </ul>
       </div>
