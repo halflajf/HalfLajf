@@ -103,8 +103,6 @@ class Firebase {
 
   likes = uid => this.db.ref(`memes/${uid}`);
 
-  dislikes = uid => this.db.ref(`memes/${uid}`).child(`likes`);
-
   dislike = (uid, userId) => this.db.ref(`memes/${uid}/likes/${userId}`);
 }
 

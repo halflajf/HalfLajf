@@ -8,6 +8,7 @@ import * as ROLES from "../../constants/roles";
 import * as ROUTES from "../../constants/routes";
 import CreateMem from "./createMem";
 import { EditMem } from "./createMem";
+import MemBrowser from "../Memes/memBrowser";
 
 const AdminPage = () => (
   <div>
@@ -18,6 +19,7 @@ const AdminPage = () => (
       <Route exact path={ROUTES.ADMIN_DETAILS} component={UserItem} />
       <Route exact path={ROUTES.ADMIN} component={UserList} />
     </Switch>
+    <MemBrowser />
   </div>
 );
 

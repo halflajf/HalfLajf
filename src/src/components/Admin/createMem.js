@@ -26,18 +26,22 @@ class CreateMem extends Component {
     this.setState({ tags: event.target.value });
   };
 
+  onSerializeTags = () => this.state.tags.split(" ");
+
   onCreateMem = (event, authUser) => {
+    let tags = [];
+
     this.props.firebase.memes().push({
       url: this.state.url,
       userId: authUser.uid,
       username: authUser.username,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
       title: this.state.title,
-      tags: this.state.tags,
+      tags: this.onSerializeTags(),
       comments: []
     });
 
-    this.setState({ url: "", title: "" });
+    this.setState({ url: "", title: "", tags: "" });
 
     event.preventDefault();
   };
