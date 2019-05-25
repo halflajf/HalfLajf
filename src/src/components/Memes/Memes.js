@@ -88,6 +88,7 @@ class MemesBase extends Component {
 
   render() {
     const { memes, loading } = this.state;
+    console.log(this.props);
 
     return (
       <AuthUserContext.Consumer>

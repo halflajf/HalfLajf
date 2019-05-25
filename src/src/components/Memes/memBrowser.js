@@ -7,7 +7,8 @@ class MemBrowser extends Component {
     super(props);
 
     this.state = {
-      memes: []
+      memes: [],
+      searchValue: ""
     };
   }
 
@@ -37,12 +38,35 @@ class MemBrowser extends Component {
     this.props.firebase.memes().off();
   }
 
+  onSearchValue = event => {
+    this.setState({ searchValue: event.target.value }, () =>
+      this.getMemesByTag()
+    );
+    //console.log(this.state.searchValue + " val");
+  };
+
+  getMemesByTag = () => {
+    const filterMemes = this.state.memes.filter(mem =>
+      mem.tags.includes(this.state.searchValue)
+    );
+
+    console.log(filterMemes);
+  };
+
   render() {
-    const { memes } = this.state;
-    {
-      console.log(memes[2]);
-    }
-    return <div />;
+    return (
+      <div>
+        <button onClick={this.onSearchValue} value="#janusz">
+          #janusz
+        </button>
+        <button onClick={this.onSearchValue} value="#zwierze">
+          #zwierze
+        </button>
+        <button onClick={this.onSearchValue} value="#maciek">
+          #maciek
+        </button>
+      </div>
+    );
   }
 }
 

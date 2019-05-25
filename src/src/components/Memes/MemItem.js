@@ -68,7 +68,7 @@ class MemItem extends Component {
         uid: key
       }));
 
-      const userLike = likes.filter(like => like.userId == userId);
+      const userLike = likes.filter(like => like.userId === userId);
 
       this.props.firebase.dislike(mem.uid, userLike[0].uid).remove();
     }
@@ -146,7 +146,7 @@ class MemItem extends Component {
               ) : (
                 <span>
                   <span>{mem.likes.filter(like => like != null).length}</span>
-                  {mem.likes.filter(user => user.userId == authUser.uid)
+                  {mem.likes.filter(user => user.userId === authUser.uid)
                     .length ? (
                     <span>
                       <button onClick={() => this.onDislike(mem, authUser.uid)}>
