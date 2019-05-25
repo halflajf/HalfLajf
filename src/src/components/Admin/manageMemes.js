@@ -105,7 +105,9 @@ class MemItem extends Component {
 
     this.state = {
       editUrlMode: false,
-      editUrl: this.props.mem.url
+      editUrl: this.props.mem.url,
+      editTitle: this.props.mem.title,
+      editTags: this.props.mem.tags
     };
   }
   onToggleEditUrlMode = () => {

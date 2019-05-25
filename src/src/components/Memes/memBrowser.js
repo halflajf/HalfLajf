@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { withFirebase } from "../Firebase";
+import Memes from "./Memes";
 
 class MemBrowser extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class MemBrowser extends Component {
   }
 
   onSearchValue = event => {
+    this.onListenForMemes();
     this.setState({ searchValue: event.target.value }, () =>
       this.getMemesByTag()
     );
@@ -46,11 +48,16 @@ class MemBrowser extends Component {
   };
 
   getMemesByTag = () => {
-    const filterMemes = this.state.memes.filter(mem =>
-      mem.tags.includes(this.state.searchValue)
-    );
+    this.setState({
+      memes: this.state.memes.filter(mem =>
+        mem.tags.includes(this.state.searchValue)
+      )
+    });
+    // const filterMemes = this.state.memes.filter(mem =>
+    //   mem.tags.includes(this.state.searchValue)
+    // );
 
-    console.log(filterMemes);
+    // console.log(filterMemes);
   };
 
   render() {
@@ -65,6 +72,7 @@ class MemBrowser extends Component {
         <button onClick={this.onSearchValue} value="#maciek">
           #maciek
         </button>
+        <Memes memes={this.state.memes} />
       </div>
     );
   }

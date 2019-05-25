@@ -10,20 +10,22 @@ class MemesBase extends Component {
 
     this.state = {
       loading: false,
-      memes: [],
+      memes: this.props.memes,
       url: "",
       title: "",
       limit: 5
     };
   }
 
-  componentDidMount() {
-    this.onListenForMemes();
+  /*
+   componentDidMount() {
+   this.onListenForMemes();
   }
+
   onNextPage = () => {
     this.setState(state => ({ limit: state.limit + 5 }), this.onListenForMemes);
   };
-
+*/
   onAddComment = (mem, message, authUser) => {
     const { uid, ...memSnapshot } = mem;
     let { comments } = mem;
@@ -42,6 +44,8 @@ class MemesBase extends Component {
       comments
     });
   };
+
+  /*
   onListenForMemes() {
     this.setState({ loading: true });
 
@@ -66,14 +70,15 @@ class MemesBase extends Component {
         this.setState({ loading: false });
       });
   }
-
+*/
   componentWillUnmount() {
     this.props.firebase.memes().off();
   }
 
   render() {
-    const { memes, loading } = this.state;
-    console.log(this.props);
+    const { memes, loading } = this.props;
+
+    console.log(memes);
 
     return (
       <AuthUserContext.Consumer>
@@ -84,7 +89,7 @@ class MemesBase extends Component {
                 More
               </button>
             )}
-
+            {console.log(memes)}
             {memes ? (
               <MemList
                 authUser={authUser}
