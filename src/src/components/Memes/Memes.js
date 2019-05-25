@@ -31,8 +31,7 @@ class MemesBase extends Component {
       userId: authUser.uid,
       username: authUser.username,
       createdAt: this.props.firebase.serverValue.TIMESTAMP,
-      comment: message,
-      isDeleted: false
+      comment: message
     };
 
     if (!comments) comments = [];
@@ -72,20 +71,6 @@ class MemesBase extends Component {
     this.props.firebase.memes().off();
   }
 
-  onEditMem = (mem, url) => {
-    const { uid, ...memSnapshot } = mem;
-
-    this.props.firebase.mem(mem.uid).set({
-      ...memSnapshot,
-      url,
-      editedAt: this.props.firebase.serverValue.TIMESTAMP
-    });
-  };
-
-  onRemoveMem = uid => {
-    this.props.firebase.mem(uid).remove();
-  };
-
   render() {
     const { memes, loading } = this.state;
     console.log(this.props);
@@ -104,8 +89,6 @@ class MemesBase extends Component {
               <MemList
                 authUser={authUser}
                 memes={memes}
-                onRemoveMem={this.onRemoveMem}
-                onEditMem={this.onEditMem}
                 onAddComment={this.onAddComment}
               />
             ) : (

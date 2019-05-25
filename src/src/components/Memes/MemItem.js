@@ -75,7 +75,7 @@ class MemItem extends Component {
   };
 
   render() {
-    const { authUser, mem, onRemoveMem } = this.props;
+    const { authUser, mem } = this.props;
     const { editUrlMode, editUrl, comment } = this.state;
 
     return (
@@ -116,24 +116,6 @@ class MemItem extends Component {
           </div>
         ) : (
           <span>
-            {authUser.uid === mem.userId ||
-              (authUser.roles.includes(ROLES.ADMIN) && (
-                <span>
-                  {editUrlMode ? (
-                    <span>
-                      <button onClick={this.onSaveEditUrl}>Save</button>
-                      <button onClick={this.onToggleEditUrlMode}>Return</button>
-                    </span>
-                  ) : (
-                    <button onClick={this.onToggleEditUrlMode}>Edit</button>
-                  )}
-                  {!editUrlMode && (
-                    <button type="button" onClick={() => onRemoveMem(mem.uid)}>
-                      Delete
-                    </button>
-                  )}
-                </span>
-              ))}
             <div>
               <span>Likes</span>{" "}
               {!mem.likes ? (
