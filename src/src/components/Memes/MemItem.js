@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CommentList from "./CommentList";
-import * as ROLES from "../../constants/roles";
 import { withFirebase } from "../Firebase";
 
 class MemItem extends Component {

@@ -9,7 +9,8 @@ class MemBrowser extends Component {
 
     this.state = {
       memes: [],
-      searchValue: ""
+      searchValue: "",
+      loading: false
     };
   }
 
@@ -18,20 +19,20 @@ class MemBrowser extends Component {
   }
 
   onListenForMemes() {
+    this.setState({ loading: true });
     this.props.firebase.memes().on("value", snapshot => {
-      // convert messages list from snapshot
       const memObject = snapshot.val();
 
       if (memObject) {
-        // convert messages list from snapshot
         const memesList = Object.keys(memObject).map(key => ({
           ...memObject[key],
           uid: key
         }));
-        this.setState({ memes: memesList });
+        this.setState({ memes: memesList, loading: false });
       } else {
-        this.setState({ memes: null });
+        this.setState({ memes: null, loading: false });
       }
+      this.setState({ loading: false });
     });
   }
 
@@ -44,7 +45,6 @@ class MemBrowser extends Component {
     this.setState({ searchValue: event.target.value }, () =>
       this.getMemesByTag()
     );
-    //console.log(this.state.searchValue + " val");
   };
 
   getMemesByTag = () => {
@@ -53,14 +53,15 @@ class MemBrowser extends Component {
         mem.tags.includes(this.state.searchValue)
       )
     });
-    // const filterMemes = this.state.memes.filter(mem =>
-    //   mem.tags.includes(this.state.searchValue)
-    // );
+  };
 
-    // console.log(filterMemes);
+  getAllMemes = () => {
+    this.onListenForMemes();
   };
 
   render() {
+    const { memes, loading } = this.state;
+
     return (
       <div>
         <button onClick={this.onSearchValue} value="#janusz">
@@ -72,7 +73,12 @@ class MemBrowser extends Component {
         <button onClick={this.onSearchValue} value="#maciek">
           #maciek
         </button>
-        <Memes memes={this.state.memes} />
+        <button onClick={this.getAllMemes}>wszystkie</button>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <Memes memes={memes} loading={loading} />
+        )}
       </div>
     );
   }
