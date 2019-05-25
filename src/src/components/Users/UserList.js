@@ -45,19 +45,10 @@ class UserList extends Component {
         <div>
           <Link
             to={{
-              pathname: `${ROUTES.ADMIN_ADD_MEM}`
+              pathname: `${ROUTES.ADMIN_MANAGE_MEMES}`
             }}
           >
-            Add mem
-          </Link>
-        </div>
-        <div>
-          <Link
-            to={{
-              pathname: `${ROUTES.ADMIN_MANAGE_MEM}`
-            }}
-          >
-            Manage mem
+            Manage memes
           </Link>
         </div>
         <h2>Users</h2>

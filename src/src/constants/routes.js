@@ -5,6 +5,5 @@ export const ACCOUNT = "/account";
 export const PASSWORD_FORGET = "/pw-forget";
 export const ADMIN = "/admin";
 export const ADMIN_DETAILS = "/admin/:id";
-export const ADMIN_ADD_MEM = "/admin/addMem";
-export const ADMIN_MANAGE_MEM = "/admin/manageMem";
+export const ADMIN_MANAGE_MEMES = "/admin/manageMemes";
 export const RANDOM_MEM = "/randomMem";

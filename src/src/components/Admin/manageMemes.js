@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import * as ROLES from "../../constants/roles";
+
 import { AuthUserContext } from "../Session";
 import { withFirebase } from "../Firebase";
 import CreateMem from "./createMem";
@@ -125,13 +125,9 @@ class MemItem extends Component {
     this.setState({ editUrlMode: false });
   };
 
-  onChangeComment = event => {
-    this.setState({ comment: event.target.value });
-  };
-
   render() {
-    const { authUser, mem, onRemoveMem } = this.props;
-    const { editUrlMode, editUrl, comment } = this.state;
+    const { mem, onRemoveMem } = this.props;
+    const { editUrlMode, editUrl } = this.state;
 
     return (
       <li>
@@ -139,32 +135,30 @@ class MemItem extends Component {
           <input type="text" value={editUrl} onChange={this.onChangeEditUrl} />
         ) : (
           <span>
-            <strong>Title: {mem.title}</strong> <br />
             <img src={mem.url} alt="" />
           </span>
         )}
-        {!authUser ? (
-          <div />
+
+        {editUrlMode ? (
+          <span>
+            <button onClick={this.onSaveEditUrl}>Save</button>
+            <button onClick={this.onToggleEditUrlMode}>Return</button>
+          </span>
         ) : (
           <span>
-            <span>
-              {editUrlMode ? (
-                <span>
-                  <button onClick={this.onSaveEditUrl}>Save</button>
-                  <button onClick={this.onToggleEditUrlMode}>Return</button>
-                </span>
-              ) : (
-                <button onClick={this.onToggleEditUrlMode}>Edit</button>
-              )}
-              {!editUrlMode && (
-                <button type="button" onClick={() => onRemoveMem(mem.uid)}>
-                  Delete
-                </button>
-              )}
-            </span>
-            <div />
+            <div>Title {mem.title}</div>
+            <div>URL {mem.url}</div>
+            <div>Tags {mem.tags}</div>
+            <button onClick={this.onToggleEditUrlMode}>Edit</button>
           </span>
         )}
+        {!editUrlMode && (
+          <button type="button" onClick={() => onRemoveMem(mem.uid)}>
+            Delete
+          </button>
+        )}
+
+        <div />
       </li>
     );
   }
