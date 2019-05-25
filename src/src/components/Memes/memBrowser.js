@@ -77,7 +77,13 @@ class MemBrowser extends Component {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <Memes memes={memes} loading={loading} />
+          <span>
+            {memes.length ? (
+              <Memes memes={memes} loading={loading} />
+            ) : (
+              <div>There are no memes ...</div>
+            )}
+          </span>
         )}
       </div>
     );

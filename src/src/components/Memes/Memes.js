@@ -41,7 +41,7 @@ class MemesBase extends Component {
                 onAddComment={this.onAddComment}
               />
             ) : (
-              <div>There are no memes ...</div>
+              <div />
             )}
           </div>
         )}
