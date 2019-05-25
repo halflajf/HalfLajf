@@ -1,0 +1,8 @@
+.collapsible-secondary { 
+    position: absolute; 
+    right: 0;
+}
+
+.collapsible-header {
+    position: relative;
+}
