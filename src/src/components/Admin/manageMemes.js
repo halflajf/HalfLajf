@@ -46,12 +46,14 @@ class MemesBase extends Component {
     this.props.firebase.memes().off();
   }
 
-  onEditMem = (mem, url) => {
+  onEditMem = (mem, url, title, tags) => {
     const { uid, ...memSnapshot } = mem;
 
     this.props.firebase.mem(mem.uid).set({
       ...memSnapshot,
       url,
+      title,
+      tags,
       editedAt: this.props.firebase.serverValue.TIMESTAMP
     });
   };
@@ -107,13 +109,14 @@ class MemItem extends Component {
       editUrlMode: false,
       editUrl: this.props.mem.url,
       editTitle: this.props.mem.title,
-      editTags: this.props.mem.tags
+      editTags: this.props.mem.tags.join(" ")
     };
   }
   onToggleEditUrlMode = () => {
     this.setState(state => ({
       editUrlMode: !state.editUrlMode,
-      editUrl: this.props.mem.url
+      editUrl: this.props.mem.url,
+      editTitle: this.props.mem.title
     }));
   };
 
@@ -121,20 +124,51 @@ class MemItem extends Component {
     this.setState({ editUrl: event.target.value });
   };
 
+  onChangeEditTitle = event => {
+    this.setState({ editTitle: event.target.value });
+  };
+
+  onChangeEditTags = event => {
+    this.setState({ editTags: event.target.value });
+  };
+
   onSaveEditUrl = () => {
-    this.props.onEditMem(this.props.mem, this.state.editUrl);
+    this.props.onEditMem(
+      this.props.mem,
+      this.state.editUrl,
+      this.state.editTitle,
+      this.state.editTags.split(" ")
+    );
 
     this.setState({ editUrlMode: false });
   };
 
   render() {
     const { mem, onRemoveMem } = this.props;
-    const { editUrlMode, editUrl } = this.state;
+    const { editUrlMode, editUrl, editTitle, editTags } = this.state;
 
     return (
       <li>
         {editUrlMode ? (
-          <input type="text" value={editUrl} onChange={this.onChangeEditUrl} />
+          <span>
+            <input
+              type="text"
+              value={editTitle}
+              onChange={this.onChangeEditTitle}
+            />{" "}
+            <br />{" "}
+            <input
+              type="text"
+              value={editUrl}
+              onChange={this.onChangeEditUrl}
+            />
+            <br />{" "}
+            <input
+              type="text"
+              value={editTags}
+              onChange={this.onChangeEditTags}
+            />
+          </span>
         ) : (
           <span>
             <img src={mem.url} alt="" />
@@ -142,10 +176,10 @@ class MemItem extends Component {
         )}
 
         {editUrlMode ? (
-          <span>
+          <div>
             <button onClick={this.onSaveEditUrl}>Save</button>
             <button onClick={this.onToggleEditUrlMode}>Return</button>
-          </span>
+          </div>
         ) : (
           <span>
             <div>Title {mem.title}</div>
