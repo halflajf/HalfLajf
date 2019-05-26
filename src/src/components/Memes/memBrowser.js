@@ -63,7 +63,8 @@ class MemBrowser extends Component {
     const { memes, loading } = this.state;
 
     return (
-      <div>
+      <div className="row col s12 m8 offset-m2">
+        <span>
         <button onClick={this.onSearchValue} value="#janusz">
           #janusz
         </button>
@@ -74,6 +75,7 @@ class MemBrowser extends Component {
           #maciek
         </button>
         <button onClick={this.getAllMemes}>wszystkie</button>
+        </span>
         {loading ? (
           <div>Loading...</div>
         ) : (

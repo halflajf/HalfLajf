@@ -78,14 +78,14 @@ class MemItem extends Component {
     const { editUrlMode, editUrl, comment } = this.state;
 
     return (
-      <li>
+      <li className="card z-depth-1 meme-summary">
         {editUrlMode ? (
           <input type="text" value={editUrl} onChange={this.onChangeEditUrl} />
         ) : (
-          <span>
+          <span className="card-image">
             <strong>
+              <h2>{mem.title}</h2>
               Created by: {mem.username || mem.userId} <br />
-              Title: {mem.title}
               {!mem.editedAt ? (
                 <div>
                   Created At:{" "}
@@ -100,8 +100,7 @@ class MemItem extends Component {
                 </div>
               )}
             </strong>{" "}
-            <br />
-            <img src={mem.url} alt="" />
+            <img style={{padding:4}} src={mem.url} alt="" />
           </span>
         )}
         {!authUser ? (
@@ -161,15 +160,20 @@ class MemItem extends Component {
         {!authUser ? (
           <span />
         ) : (
-          <span>
-            <input
+          <div>
+          <div className="input-field" >  
+          <i className="material-icons prefix">border_color</i>
+            <input className="materialize-textarea" id="userComment"
               type="text"
               value={comment}
               onChange={this.onChangeComment}
             />
-
-            <button onClick={this.onSaveEditComment}>Add comment</button>
-          </span>
+<label htmlFor="userComment">Share your thoughts about this meme</label>
+          </div>
+          <span className="input-field" style={{padding: 2}}>
+            <button onClick={this.onSaveEditComment} className="btn orange darken-2 z-depth-1">Add comment</button>
+            </span>
+          </div>
         )}
       </li>
     );

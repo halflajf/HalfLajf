@@ -44,7 +44,7 @@ class CommentItem extends Component {
     const { comment, index, MemUid, authUser } = this.props;
 
     return (
-      <li>
+      <div style={{padding:3}}>
         {CommentEditMode ? (
           <input
             type="text"
@@ -134,7 +134,7 @@ class CommentItem extends Component {
               )}
           </span>
         )}
-      </li>
+        </div>
     );
   }
 }

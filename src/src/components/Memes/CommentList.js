@@ -2,8 +2,9 @@ import React from "react";
 import CommentItem from "./CommentItem";
 
 const CommentList = ({ comments, MemUid, authUser }) => (
-  <ul>
+  <ul className="comment section">
     {comments.map((comment, i) => (
+      <li>
       <CommentItem
         key={i}
         comment={comment}
@@ -11,6 +12,7 @@ const CommentList = ({ comments, MemUid, authUser }) => (
         MemUid={MemUid}
         authUser={authUser}
       />
+      </li>
     ))}
   </ul>
 );

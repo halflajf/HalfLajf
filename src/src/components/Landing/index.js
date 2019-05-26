@@ -3,8 +3,7 @@ import Memes from "../Memes";
 import MemBrowser from "../Memes/memBrowser";
 
 const Landing = () => (
-  <div>
-    <h1>Landing</h1>
+  <div className="dashboard container">
     <span>
       <MemBrowser />
       <Memes />
