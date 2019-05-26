@@ -1,0 +1,17 @@
+.material-icons {
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+.icon-red {
+    color: red;
+}
+
+.icon-green {
+    color: green
+}
+
+.like-counter {
+    margin-left: 15px;
+    margin-right: 15px;
+}
