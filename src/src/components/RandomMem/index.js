@@ -45,7 +45,7 @@ class RandomMem extends Component {
 
     return (
       <span>
-        <img src={mem.url} alt={mem.text} />
+        <img src={mem.image} alt={mem.caption} />
         <br />
         <button onClick={this.getRandomMem}>Roll next!</button>
       </span>

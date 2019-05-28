@@ -86,6 +86,7 @@ class MemItem extends Component {
             <strong>
               <h2>{mem.title}</h2>
               Created by: {mem.username || mem.userId} <br />
+              Tags: {mem.tags} <br />
               {!mem.editedAt ? (
                 <div>
                   Created At:{" "}
@@ -100,7 +101,7 @@ class MemItem extends Component {
                 </div>
               )}
             </strong>{" "}
-            <img style={{padding:4}} src={mem.url} alt="" />
+            <img style={{ padding: 4 }} src={mem.url} alt="" />
           </span>
         )}
         {!authUser ? (
@@ -161,17 +162,26 @@ class MemItem extends Component {
           <span />
         ) : (
           <div>
-          <div className="input-field" >  
-          <i className="material-icons prefix">border_color</i>
-            <input className="materialize-textarea" id="userComment"
-              type="text"
-              value={comment}
-              onChange={this.onChangeComment}
-            />
-<label htmlFor="userComment">Share your thoughts about this meme</label>
-          </div>
-          <span className="input-field" style={{padding: 2}}>
-            <button onClick={this.onSaveEditComment} className="btn orange darken-2 z-depth-1">Add comment</button>
+            <div className="input-field">
+              <i className="material-icons prefix">border_color</i>
+              <input
+                className="materialize-textarea"
+                id="userComment"
+                type="text"
+                value={comment}
+                onChange={this.onChangeComment}
+              />
+              <label htmlFor="userComment">
+                Share your thoughts about this meme
+              </label>
+            </div>
+            <span className="input-field" style={{ padding: 2 }}>
+              <button
+                onClick={this.onSaveEditComment}
+                className="btn orange darken-2 z-depth-1"
+              >
+                Add comment
+              </button>
             </span>
           </div>
         )}

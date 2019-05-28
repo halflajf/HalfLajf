@@ -12,6 +12,7 @@ class MemesBase extends Component {
   onAddComment = (mem, message, authUser) => {
     const { uid, ...memSnapshot } = mem;
     let { comments } = mem;
+    if (!authUser.username) authUser.username = "Annymous";
     let comment = {
       userId: authUser.uid,
       username: authUser.username,

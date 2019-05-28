@@ -149,10 +149,12 @@ class SignInFacebookBase extends Component {
     this.props.firebase
       .doSignInWithFacebook()
       .then(socialAuthUser => {
+        {
+          console.log(socialAuthUser);
+        }
         // Create a user in your Firebase Realtime Database too
         return this.props.firebase.user(socialAuthUser.user.uid).set({
           username: socialAuthUser.additionalUserInfo.profile.name,
-          email: "sebaztian60@gmail.com",
           //email: socialAuthUser.additionalUserInfo.profile.email,
           roles: []
         });
