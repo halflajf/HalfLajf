@@ -19,3 +19,6 @@ HalfLajf is a modern single-page application (SPA) website which lets users from
 *   Marcin - _**Backend developer**_
 *   Maciej - _**Backend developer**_
 *   Sebastian - _**Backend developer**_
+
+Use case diagram:
+![alt text](https://raw.githubusercontent.com/halflajf/HalfLajf/master/use_case_diagram_half_lajf.png)
