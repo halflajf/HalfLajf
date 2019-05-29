@@ -22,3 +22,6 @@ HalfLajf is a modern single-page application (SPA) website which lets users from
 
 Use case diagram:
 ![alt text](https://raw.githubusercontent.com/halflajf/HalfLajf/master/use_case_diagram_half_lajf.png)
+
+Prototype:
+https://share.proto.io/N4CT37/
