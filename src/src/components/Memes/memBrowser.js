@@ -64,17 +64,22 @@ class MemBrowser extends Component {
 
     return (
       <div className="row col s12 m8 offset-m2">
+        {" "}
+        <br />
         <span>
-        <button onClick={this.onSearchValue} value="#janusz">
-          #janusz
-        </button>
-        <button onClick={this.onSearchValue} value="#zwierze">
-          #zwierze
-        </button>
-        <button onClick={this.onSearchValue} value="#maciek">
-          #maciek
-        </button>
-        <button onClick={this.getAllMemes}>wszystkie</button>
+          <center>
+            {`Categories: `}
+            <button onClick={this.onSearchValue} value="#janusz">
+              #śmieszne
+            </button>
+            <button onClick={this.onSearchValue} value="#zwierze">
+              #zwierze
+            </button>
+            <button onClick={this.onSearchValue} value="#maciek">
+              #hobby
+            </button>
+            <button onClick={this.getAllMemes}>wszystkie</button>
+          </center>
         </span>
         {loading ? (
           <div>Loading...</div>

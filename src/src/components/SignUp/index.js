@@ -129,7 +129,6 @@ class SignUpFormBase extends Component {
           placeholder="Confirm Password"
         />
         <label>
-          Admin:
           <input
             name="isAdmin"
             type="checkbox"
