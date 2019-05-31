@@ -6,9 +6,12 @@ import * as ROUTES from "../../constants/routes";
 import * as ROLES from "../../constants/roles";
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
+  <div className="container">
+    <h5>SignUp</h5>
     <SignUpForm />
+    <p className="center">
+    Alternatively you can <Link to={ROUTES.SIGN_IN}>log in</Link> using your social media accounts.
+    </p>
   </div>
 );
 
@@ -100,34 +103,26 @@ class SignUpFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
-          name="username"
-          value={username}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Full Name"
-        />
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm Password"
-        />
+        <div className="input-field">
+          <i className="material-icons prefix">account_circle</i>
+          <input type="text" name="username" id="username" value={username} onChange={this.onChange}/>
+          <label htmlFor="username">Username</label>
+        </div>
+        <div className="input-field">
+          <i className="material-icons prefix">mail_outline</i>
+          <input type="email" name="email" id="email" value={email} onChange={this.onChange}/>
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="input-field">
+          <i className="material-icons prefix">lock_outline</i>
+          <input type="password" name="passwordOne" id="passwordOne" value={passwordOne} onChange={this.onChange}/>
+          <label htmlFor="passwordOne">Password</label>
+        </div>
+        <div className="input-field">
+          <i className="material-icons prefix">vpn_key</i>
+          <input type="password" name="passwordTwo" id="passwordTwo" value={passwordTwo} onChange={this.onChange}/>
+          <label htmlFor="passwordTwo">Confirm password</label>
+        </div>
         <label>
           <input
             name="isAdmin"
@@ -136,9 +131,9 @@ class SignUpFormBase extends Component {
             onChange={this.onChangeCheckbox}
           />
         </label>
-        <button disabled={isInvalid} type="submit">
-          Sign Up
-        </button>
+        <div className="input-field right-align">
+          <button disabled={isInvalid} type="submit" className="btn orange darken-2 z-depth-1">Sign Up</button>
+        </div>
         {error && <p>{error.message}</p>}
       </form>
     );

@@ -8,11 +8,14 @@ import { withFirebase } from "../Firebase";
 import * as ROUTES from "../../constants/routes";
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
+  <div className="container">
+    <h5>Sign In With Email</h5>
     <SignInForm />
-    <SignInGoogle />
-    <SignInFacebook />
+    <h6 className="center">Or Sign In With Social Media:</h6>
+    <header className="center">
+      <SignInGoogle />
+      <SignInFacebook />
+    </header>
     <PasswordForgetLink />
     <SignUpLink />
   </div>
@@ -68,24 +71,19 @@ class SignInFormBase extends Component {
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
-
+        <div className="input-field">
+          <i className="material-icons prefix">mail_outline</i>
+          <input name= "email" value={email} type="email" id="email" onChange={this.onChange}/>
+          <label htmlFor="email">Email</label>
+        </div>
+        <div className="input-field">
+          <i className="material-icons prefix">lock_outline</i>
+          <input name="password" value={password} type="password" id="password" onChange={this.onChange}/>
+          <label htmlFor="password">Password</label>
+        </div>
+        <div className="input-field right-align">
+          <button disabled={isInvalid} type="submit" className="btn orange darken-2 z-depth-1">Login</button>
+        </div>
         {error && <p>{error.message}</p>}
       </form>
     );
@@ -129,11 +127,9 @@ class SignInGoogleBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
-
-        {error && <p>{error.message}</p>}
-      </form>
+        <a href=''>
+          <img src={require('../../resources/iconfinderGoogle.png')} alt="Google login" style={{width: 48, height: 48, marginRight: 8}} onClick={this.onSubmit}/>
+        </a>
     );
   }
 }
@@ -178,11 +174,9 @@ class SignInFacebookBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
-        {console.log(error)}
-        {error && <p>{error.message}</p>}
-      </form>
+        <a href=''>
+          <img src={require('../../resources/iconfinderFacebook.png')} alt="Facebook login" style={{width: 48, height: 48, marginLeft: 8}} onClick={this.onSubmit}/>
+        </a>
     );
   }
 }

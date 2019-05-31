@@ -28,8 +28,8 @@ const SIGN_IN_METHODS = [
 const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
-      <div>
-        <h1>Account: {authUser.email}</h1>
+      <div className="container">
+        <h5 className="center"><b>Account:</b> {authUser.email}</h5>
         <PasswordForgetForm />
         <PasswordChangeForm />
         <LoginManagement authUser={authUser} />
@@ -92,7 +92,7 @@ class LoginManagementBase extends Component {
 
     return (
       <div>
-        Sign In Methods:
+        <h5>Sign In Methods:</h5>
         <ul>
           {SIGN_IN_METHODS.map(signInMethod => {
             const onlyOneLeft = activeSignInMethods.length === 1;
@@ -135,31 +135,31 @@ const SocialLoginToggle = ({
   onUnlink
 }) =>
   isEnabled ? (
-    <button
-      type="button"
-      onClick={() => onUnlink(signInMethod.id)}
-      disabled={onlyOneLeft}
-    >
-      Deactivate {signInMethod.id}
-    </button>
+    <div className="input-field">
+      <button type="button" onClick={() => onUnlink(signInMethod.id)} disabled={onlyOneLeft} className="btn orange darken-2 z-depth-1">
+        Deactivate {signInMethod.id}
+      </button>
+    </div>
   ) : (
-    <button type="button" onClick={() => onLink(signInMethod.provider)}>
-      Link {signInMethod.id}
-    </button>
+    <div className="input-field">
+      <button type="button" onClick={() => onLink(signInMethod.provider)} className="btn orange darken-2 z-depth-1">
+        Link {signInMethod.id}
+      </button>
+    </div>
   );
 
 class DefaultLoginToggle extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { passwordOne: "", passwordTwo: "" };
+    this.state = { passwordOne1: "", passwordTwo2: "" };
   }
 
   onSubmit = event => {
     event.preventDefault();
 
-    this.props.onLink(this.state.passwordOne);
-    this.setState({ passwordOne: "", passwordTwo: "" });
+    this.props.onLink(this.state.passwordOne1);
+    this.setState({ passwordOne1: "", passwordTwo2: "" });
   };
 
   onChange = event => {
@@ -169,38 +169,33 @@ class DefaultLoginToggle extends Component {
   render() {
     const { onlyOneLeft, isEnabled, signInMethod, onUnlink } = this.props;
 
-    const { passwordOne, passwordTwo } = this.state;
+    const { passwordOne1, passwordTwo2 } = this.state;
 
-    const isInvalid = passwordOne !== passwordTwo || passwordOne === "";
+    const isInvalid = passwordOne1 !== passwordTwo2 || passwordOne1 === "";
 
     return isEnabled ? (
-      <button
-        type="button"
-        onClick={() => onUnlink(signInMethod.id)}
-        disabled={onlyOneLeft}
-      >
-        Deactivate {signInMethod.id}
-      </button>
+      <div className="input-field">
+        <button type="button" onClick={() => onUnlink(signInMethod.id)} disabled={onlyOneLeft} className="btn orange darken-2 z-depth-1">
+          Deactivate {signInMethod.id}
+        </button>
+      </div>
     ) : (
       <form onSubmit={this.onSubmit}>
-        <input
-          name="passwordOne"
-          value={passwordOne}
-          onChange={this.onChange}
-          type="password"
-          placeholder="New Password"
-        />
-        <input
-          name="passwordTwo"
-          value={passwordTwo}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Confirm New Password"
-        />
-
-        <button disabled={isInvalid} type="submit">
-          Link {signInMethod.id}
-        </button>
+        <div className="input-field">
+          <i className="material-icons prefix">lock_outline</i>
+          <input type="password" name="passwordOne1" id="passwordOne1" value={passwordOne1} onChange={this.onChange}/>
+          <label htmlFor="passwordOne1">New password</label>
+        </div>
+        <div className="input-field">
+          <i className="material-icons prefix">vpn_key</i>
+          <input type="password" name="passwordTwo2" id="passwordTwo2" value={passwordTwo2} onChange={this.onChange}/>
+          <label htmlFor="passwordTwo2">Confirm new password</label>
+        </div>
+        <div className="input-field">
+          <button disabled={isInvalid} type="submit" className="btn orange darken-2 z-depth-1">
+            Link {signInMethod.id}
+          </button>
+        </div>
       </form>
     );
   }
