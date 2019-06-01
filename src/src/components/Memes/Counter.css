@@ -1,0 +1,21 @@
+.icons-likes {
+    vertical-align: middle;
+    display: inline-block;
+  }
+
+.icon-red {
+    color: red;
+}
+
+.icon-green {
+    color: green
+}
+
+.icon-grey {
+    color: grey
+}
+
+.like-counter {
+    margin-left: 15px;
+    margin-right: 15px;
+}

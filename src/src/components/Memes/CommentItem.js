@@ -44,32 +44,44 @@ class CommentItem extends Component {
     const { comment, index, MemUid, authUser } = this.props;
 
     return (
-      <div style={{padding:3}}>
-        {CommentEditMode ? (
-          <input
-            type="text"
-            value={editComment}
-            onChange={this.onChangeeditComment}
-          />
-        ) : (
-          <span>
-            Created by: {comment.username || comment.userId} <br />
+      <div className="comment">
+        <div className="row">
+          <div class="col s3">
+              <span style={{fontSize: 14}}>
+                Created by <b>{comment.username || comment.userId}</b><br/>
+                {!comment.editedAt ? (
+                  <div style={{fontSize: 11}}>
+                    Created At:{" "}
+                    {new Date(comment.createdAt).toLocaleTimeString("en-US")}{" "}
+                    {new Date(comment.createdAt).toLocaleDateString("en-US")}
+                  </div>
+                ) : (
+                  <div style={{fontSize: 11}}>
+                    Edited At:{" "}
+                    {new Date(comment.editedAt).toLocaleTimeString("en-US")}{" "}
+                    {new Date(comment.editedAt).toLocaleDateString("en-US")}
+                  </div>
+                )}
+              </span>
+          </div>
+          <div className="col s9">
             {comment.comment}
-            {!comment.editedAt ? (
-              <div>
-                Created At:{" "}
-                {new Date(comment.createdAt).toLocaleTimeString("en-US")}{" "}
-                {new Date(comment.createdAt).toLocaleDateString("en-US")}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col s12">
+            {CommentEditMode &&
+              <div className="input-field">
+                <i className="material-icons prefix">border_color</i>
+                <input type="text" id="commentEditor" value={editComment} onChange={this.onChangeeditComment}/>
+                <label class="active" htmlFor="commentEditor">
+                  Edytuj komentarz:
+                </label>
               </div>
-            ) : (
-              <div>
-                Edited At:{" "}
-                {new Date(comment.editedAt).toLocaleTimeString("en-US")}{" "}
-                {new Date(comment.editedAt).toLocaleDateString("en-US")}
-              </div>
-            )}
-          </span>
-        )}
+            }
+          </div>
+        </div>
+        <div className="row right-align">
         {!authUser ? (
           <span />
         ) : (
@@ -78,23 +90,19 @@ class CommentItem extends Component {
               <span>
                 {CommentEditMode ? (
                   <span>
-                    <button
-                      onClick={() =>
-                        this.onEditMessage(MemUid, comment, editComment, index)
-                      }
-                    >
+                    <button onClick={() => this.onEditMessage(MemUid, comment, editComment, index)} className="btn-small orange darken-2 z-depth-1">
                       Save
                     </button>
-                    <button onClick={this.onToggleCommentEditMode}>
-                      Cofnij
+                    <button onClick={this.onToggleCommentEditMode} className="btn-small orange darken-2 z-depth-1">
+                      Cancel
                     </button>
                   </span>
                 ) : (
-                  <button onClick={this.onToggleCommentEditMode}>Edit</button>
+                  <button onClick={this.onToggleCommentEditMode} className="btn-small orange darken-2 z-depth-1">Edit</button>
                 )}
 
                 {!CommentEditMode && (
-                  <button onClick={() => this.onRemoveComment(MemUid, index)}>
+                  <button onClick={() => this.onRemoveComment(MemUid, index)} className="btn-small orange darken-2 z-depth-1">
                     Delete comment
                   </button>
                 )}
@@ -105,28 +113,18 @@ class CommentItem extends Component {
                 <span>
                   {CommentEditMode ? (
                     <span>
-                      <button
-                        onClick={() =>
-                          this.onEditMessage(
-                            MemUid,
-                            comment,
-                            editComment,
-                            index
-                          )
-                        }
-                      >
+                      <button onClick={() => this.onEditMessage(MemUid, comment, editComment, index)} className="btn-small orange darken-2 z-depth-1">
                         Save
                       </button>
-                      <button onClick={this.onToggleCommentEditMode}>
-                        Cofnij
+                      <button onClick={this.onToggleCommentEditMode} className="btn-small orange darken-2 z-depth-1">
+                        Cancel
                       </button>
                     </span>
                   ) : (
-                    <button onClick={this.onToggleCommentEditMode}>Edit</button>
+                    <button onClick={this.onToggleCommentEditMode} className="btn-small orange darken-2 z-depth-1">Edit</button>
                   )}
-
                   {!CommentEditMode && (
-                    <button onClick={() => this.onRemoveComment(MemUid, index)}>
+                    <button onClick={() => this.onRemoveComment(MemUid, index)} className="btn-small orange darken-2 z-depth-1">
                       Delete comment
                     </button>
                   )}
@@ -135,6 +133,7 @@ class CommentItem extends Component {
           </span>
         )}
         </div>
+      </div>
     );
   }
 }

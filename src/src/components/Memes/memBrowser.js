@@ -67,18 +67,18 @@ class MemBrowser extends Component {
         {" "}
         <br />
         <span>
+          <h5 className="center">Categories:</h5>
           <center>
-            {`Categories: `}
-            <button onClick={this.onSearchValue} value="#janusz">
+            <button onClick={this.onSearchValue} value="#śmieszne" className="btn-small orange darken-2 z-depth-1">
               #śmieszne
             </button>
-            <button onClick={this.onSearchValue} value="#zwierze">
+            <button onClick={this.onSearchValue} value="#zwierze" className="btn-small orange darken-2 z-depth-1">
               #zwierze
             </button>
-            <button onClick={this.onSearchValue} value="#maciek">
+            <button onClick={this.onSearchValue} value="#hobby" className="btn-small orange darken-2 z-depth-1">
               #hobby
             </button>
-            <button onClick={this.getAllMemes}>wszystkie</button>
+            <button onClick={this.getAllMemes} className="btn-small orange darken-2 z-depth-1">wszystkie</button>
           </center>
         </span>
         {loading ? (
