@@ -7,3 +7,4 @@ export const ADMIN = "/admin";
 export const ADMIN_DETAILS = "/admin/:id";
 export const ADMIN_MANAGE_MEMES = "/admin/manageMemes";
 export const RANDOM_MEM = "/randomMem";
+export const UPLOAD = "/upload"

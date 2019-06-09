@@ -9,6 +9,7 @@ import PasswordForgetPage from "../PasswordForget";
 import AccountPage from "../Account";
 import AdminPage from "../Admin";
 import RandomMem from "../RandomMem";
+import UploadMeme from "../Memes/MemeUpload.js"
 
 import * as ROUTES from "../../constants/routes";
 import { withAuthentication } from "../Session";
@@ -25,6 +26,7 @@ const App = () => (
       <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
+      <Route path={ROUTES.UPLOAD} component={UploadMeme} />
     </div>
   </Router>
 );

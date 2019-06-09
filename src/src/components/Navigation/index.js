@@ -52,7 +52,42 @@ const SignedOutLinks = () => {
   );
 };
 
+const SignedInLinksSidebar = () => {
+  return (
+    <div>
+      <li>
+        <NavLink to={ROUTES.ACCOUNT} className="sidenav-close">
+          Your profile
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to={ROUTES.LANDING} className="red-text sidenav-close">
+          Sign out
+        </NavLink>
+      </li>
+      </div>
+  );
+};
+
+const SignedOutLinksSidebar = () => {
+  return (
+    <div>
+      <li>
+        <NavLink to={ROUTES.SIGN_UP} className="sidenav-close">
+          Sign up
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to={ROUTES.SIGN_IN} className="sidenav-close">
+          Sign in
+        </NavLink>
+      </li>
+    </div>
+  );
+};
+
 class Sidenav extends Component {
+  
   componentDidMount() {
     var elem = document.querySelector(".sidenav");
     M.Sidenav.init(elem, {
@@ -73,25 +108,12 @@ class Sidenav extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink to={ROUTES.SIGN_UP} className="sidenav-close">
-              Sign up
+            <NavLink to={ROUTES.UPLOAD} className="sidenav-close">
+              Upload meme
             </NavLink>
           </li>
-          <li>
-            <NavLink to={ROUTES.SIGN_IN} className="sidenav-close">
-              Sign in
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={ROUTES.ACCOUNT} className="sidenav-close">
-              Your profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to={ROUTES.LANDING} className="red-text sidenav-close">
-              Sign out
-            </NavLink>
-          </li>
+          <SignedOutLinksSidebar/>
+          <SignedInLinksSidebar/>
         </ul>
         <a href="#" data-target="mobile-demo" className="sidenav-trigger right">
           <i className="material-icons">menu</i>
@@ -130,6 +152,9 @@ class NavigationInternal extends Component {
 
               <li>
                 <Link to={ROUTES.RANDOM_MEM}>Random meme</Link>
+              </li>
+              <li>
+                <Link to={ROUTES.UPLOAD}>Upload meme</Link>
               </li>
             </ul>
           </div>
